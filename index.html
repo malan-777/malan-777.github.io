@@ -1,7 +1,86 @@
 <!DOCTYPE html>
-<html>
-<body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
-</body>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+		.container {
+			position: relative;
+			margin: 0;
+			padding: 0;
+			display: grid;
+			overflow: hidden;
+			grid-template-columns: repeat(30, 1fr);
+		}
+
+		.img_container {
+			aspect-ratio: 1;
+			cursor: pointer;
+			overflow: hidden;
+			position: relative;
+		}
+
+		.img_container > img {
+			position: absolute;
+			inset: 0;
+			width: 100%;
+			height: 100%;
+			transition: all ease-in-out 0.15s;
+		}
+
+		.img_container > img:hover {
+			scale: 1.5;
+		}
+
+		.img.mask + .img_mask {
+			height: 100%;
+			width: 100%;
+			inset: 0;
+			position: absolute;
+			border: 4px solid #fff;
+			z-index: 1;
+		}
+
+		.img_mask {
+			pointer-events: none;
+		}
+	</style>
+	<body>
+		<div class="container" id="container"></div>
+
+		<script type="module">
+			import resolvePictures from "./resolvePictures.js"
+			import pictureFunctionComponent from "./pictrueFunctionComponent.js"
+
+			window.onload = () => {
+				const { createPictureDOM, renderDOMToContainer, bindEventContainer, maskPic, selectIdList } = pictureFunctionComponent()
+				const container = document.getElementById("container")
+
+				const count = 900
+				let currentCount = 0
+				
+				const doms = createPictureDOM("./pics", count, selectIdList)
+
+				//分布加载图片
+				const step = () => {
+					if (currentCount >= count) return
+					renderDOMToContainer(container, doms, currentCount++, selectIdList)
+
+					window.requestAnimationFrame(step)
+				}
+				step()
+
+				//给容器统一绑定事件
+				bindEventContainer(container, selectIdList, ({ targetId, isCurrentImageMask }) => {
+					console.log(`图片编号${targetId}，${isCurrentImageMask ? "被点击" : "被取消"}`)
+				})
+			}
+		</script>
+	</body>
 </html>

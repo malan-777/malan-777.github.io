@@ -4,83 +4,179 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Document</title>
+		<script src="./plugins/layui/layui.js"></script>
+		<link rel="stylesheet" href="./plugins/layui/css/layui.css" />
+		<script src="./plugins/layui/layui.js"></script>
+		<link rel="stylesheet" href="./plugins/layui/css/layui.css" />
+		<title>网页标题</title>
+		<style>
+			.load {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				line-height: 100px;
+				height: 100px;
+				font-size: 20px;
+				font-weight: 10px;
+				transition: all ease-in-out 0.05s;
+				white-space: nowrap;
+			}
+			.load.success {
+				height: 1rem;
+			}
+
+			.range_container {
+				overflow: hidden;
+				display: flex;
+				flex-direction: column;
+				width: 100%;
+				margin-top: 20px;
+				padding: 20px;
+				border: 2px solid rgba(0, 0, 0, 0.15);
+				border-radius: 2px;
+			}
+			.range_label {
+				margin-bottom: 8px;
+				white-space: pre-wrap;
+				word-wrap: break-word;
+			}
+			.range_btn {
+				width: 100%;
+				margin-bottom: 20px;
+			}
+		</style>
 	</head>
-	<style>
-		* {
-			box-sizing: border-box;
-		}
-		.container {
-			position: relative;
-			margin: 0;
-			padding: 0;
-			display: grid;
-			overflow: hidden;
-			grid-template-columns: repeat(30, 1fr);
-		}
-
-		.img_container {
-			aspect-ratio: 1;
-			cursor: pointer;
-			overflow: hidden;
-			position: relative;
-		}
-
-		.img_container > img {
-			position: absolute;
-			inset: 0;
-			width: 100%;
-			height: 100%;
-			transition: all ease-in-out 0.15s;
-		}
-
-		.img_container > img:hover {
-			scale: 1.5;
-		}
-
-		.img.mask + .img_mask {
-			height: 100%;
-			width: 100%;
-			inset: 0;
-			position: absolute;
-			border: 4px solid #fff;
-			z-index: 1;
-		}
-
-		.img_mask {
-			pointer-events: none;
-		}
-	</style>
 	<body>
-		<div class="container" id="container"></div>
+		<script></script>
+		<div class="app">
+			<div class="aside">
+				<div class="load" id="load" value-success="加载完成，开始使用">数据加载中</div>
+				<div class="range_container">
+					<div class="layui-btn-container">
+						<div class="layui-btn layui-btn-primary" id="initRange">初始化</div>
+					</div>
+					<div class="range_label" id="x-label">x坐标：[0,1]</div>
+					<div class="range_btn" id="range-btn-x"></div>
+					<div class="range_label" id="y-label">y坐标：[0,1]</div>
+					<div class="range_btn" id="range-btn-y"></div>
+					<div class="range_label" id="z-label">z坐标：[0,1]</div>
+					<div class="range_btn" id="range-btn-z"></div>
+				</div>
+			</div>
+			<div class="main">
+				<div class="pics" id="pics"></div>
+			</div>
+		</div>
+
+		<script></script>
 
 		<script type="module">
-			import resolvePictures from "./resolvePictures.js"
-			import pictureFunctionComponent from "./pictrueFunctionComponent.js"
+			import resolvePictures from "./src/resolvePictures.js"
+			import pictureFunctionComponent from "./src/pictrueFunctionComponent.js"
+			import resolveConfig from "./src/resolveConfig.js"
+			import resolveXLSX from "./src/resolveXLSX.js"
+			import readData from "./src/readData.js"
+			import { useRangeInput, useRangeInputCallback, ranges } from "./src/useRangeInput.js"
 
-			window.onload = () => {
-				const { createPictureDOM, renderDOMToContainer, bindEventContainer, maskPic, selectIdList } = pictureFunctionComponent()
-				const container = document.getElementById("container")
+			// ---------------------------------加载可自定义配置文件---------------------------------------------
+			resolveConfig("./config.json").then(async (config) => {
+				// ------------------------------统一获取dom元素------------------------------------------
+				const container = document.getElementById("pics")
+				const rangeContainer = document.getElementById("range-container")
+				const load = document.getElementById("load")
+				const axisX = document.getElementById("x-label")
+				const axisY = document.getElementById("y-label")
+				const axisZ = document.getElementById("z-label")
+				const initRange = document.getElementById("initRange")
+				const copyRange = document.getElementById("copyRange")
 
-				const count = 900
-				let currentCount = 0
-				
-				const doms = createPictureDOM("./pics", count, selectIdList)
+				const xyzDatas = []
 
-				//分布加载图片
-				const step = () => {
-					if (currentCount >= count) return
-					renderDOMToContainer(container, doms, currentCount++, selectIdList)
+				// ---------------------------------阻塞渲染图片DOM---------------------------------------------
+				const { updateSelectIdList, updateClickIdList, render } = pictureFunctionComponent(container)
+				await render(config.path[0], config.count[0], config) //路径和需要渲染的图片数目
 
-					window.requestAnimationFrame(step)
-				}
-				step()
+				// ---------------------------------阻塞加载表格数据---------------------------------------------
+				await readData("./data", ["C1.xlsx", "C2.xlsx", "C3.xlsx"]).then((res) => {
+					const datas = Array.from({ length: config.count[0] }).map((item, index) => {
+						return {
+							x: res[0][index],
+							y: res[1][index],
+							z: res[2][index],
+							id: index,
+						}
+					})
 
-				//给容器统一绑定事件
-				bindEventContainer(container, selectIdList, ({ targetId, isCurrentImageMask }) => {
-					console.log(`图片编号${targetId}，${isCurrentImageMask ? "被点击" : "被取消"}`)
+					load.innerText = load.getAttribute("value-success")
+					load.classList.add("success")
+					xyzDatas.push(...datas)
 				})
-			}
+
+				// ----------------------------侧边栏坐标范围条-----------------------------------------
+				const sliders = useRangeInput([
+					{
+						id: "#range-btn-x",
+						index: "x",
+					},
+					{
+						id: "#range-btn-y",
+						index: "y",
+					},
+					{
+						id: "#range-btn-z",
+						index: "z",
+					},
+				])
+
+				//触发滑块和图片高亮的更新
+				function calcIds(target) {
+					const targetIds = xyzDatas
+						.filter((item, index) => {
+							const { x, y, z } = item
+
+							const targetX = target["x"]
+							const targetY = target["y"]
+							const targetZ = target["z"]
+
+							axisX.innerText = `x坐标：[${targetX[0]},${targetX[1]}]`
+							axisY.innerText = `y坐标：[${targetY[0]},${targetY[1]}]`
+							axisZ.innerText = `z坐标：[${targetZ[0]},${targetZ[1]}]`
+
+							return x >= targetX[0] && x <= targetX[1] && y >= targetY[0] && y <= targetY[1] && z >= targetZ[0] && z <= targetZ[1]
+						})
+						.map((item) => `${item.id}`)
+
+					updateSelectIdList(targetIds)
+				}
+				//手动选择滑块之后的触发更新
+				useRangeInputCallback(() => {
+					calcIds(ranges)
+				})
+
+				function initAxisRange() {
+					ranges["x"].splice(0)
+					ranges["x"].push(0, 1)
+					ranges["y"].splice(0)
+					ranges["y"].push(0, 1)
+					ranges["z"].splice(0)
+					ranges["z"].push(0, 1)
+
+					sliders[0].setValue(0, 0)
+					sliders[0].setValue(Math.pow(10, 15), 1)
+					sliders[1].setValue(0, 0)
+					sliders[1].setValue(Math.pow(10, 15), 1)
+					sliders[2].setValue(0, 0)
+					sliders[2].setValue(Math.pow(10, 15), 1)
+
+					calcIds(ranges)
+					updateClickIdList([])
+					updateSelectIdList([])
+				}
+
+				// 绑定默认加载的点击事件
+				initRange.onclick = initAxisRange
+				copyRange.onclick = copyAxisRange
+			})
 		</script>
 	</body>
 </html>

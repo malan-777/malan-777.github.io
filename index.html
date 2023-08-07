@@ -6,8 +6,15 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<script src="./plugins/layui/layui.js"></script>
 		<link rel="stylesheet" href="./plugins/layui/css/layui.css" />
-		<script src="./plugins/layui/layui.js"></script>
-		<link rel="stylesheet" href="./plugins/layui/css/layui.css" />
+
+		<!-- 高德api -->
+		<script type="text/javascript">
+			window._AMapSecurityConfig = {
+				securityJsCode: "b8ebd424c760b6e6decfa854ba80c32a",
+			}
+		</script>
+		<script src="https://webapi.amap.com/maps?v=2.0&key=b2665e76905530969cb6a830bf3e4c45&plugin=AMap.DistrictSearch"></script>
+
 		<title>网页标题</title>
 		<style>
 			.load {
@@ -44,10 +51,14 @@
 				width: 100%;
 				margin-bottom: 20px;
 			}
+
+			#container {
+				width: 100%;
+				flex: 1;
+			}
 		</style>
 	</head>
 	<body>
-		<script></script>
 		<div class="app">
 			<div class="aside">
 				<div class="load" id="load" value-success="加载完成，开始使用">数据加载中</div>
@@ -62,13 +73,12 @@
 					<div class="range_label" id="z-label">z坐标：[0,1]</div>
 					<div class="range_btn" id="range-btn-z"></div>
 				</div>
+				<div id="container"></div>
 			</div>
 			<div class="main">
 				<div class="pics" id="pics"></div>
 			</div>
 		</div>
-
-		<script></script>
 
 		<script type="module">
 			import resolvePictures from "./src/resolvePictures.js"
@@ -76,7 +86,9 @@
 			import resolveConfig from "./src/resolveConfig.js"
 			import resolveXLSX from "./src/resolveXLSX.js"
 			import readData from "./src/readData.js"
-			import { useRangeInput, useRangeInputCallback, ranges } from "./src/useRangeInput.js"
+			import { useRangeInput, useRangeInputCallback, ranges, record } from "./src/useRangeInput.js"
+			import { loadMap, readCoordinate } from "./src/loadMap.js"
+			import { throttle } from "./src/useThrottle.js"
 
 			// ---------------------------------加载可自定义配置文件---------------------------------------------
 			resolveConfig("./config.json").then(async (config) => {
@@ -88,9 +100,17 @@
 				const axisY = document.getElementById("y-label")
 				const axisZ = document.getElementById("z-label")
 				const initRange = document.getElementById("initRange")
-				const copyRange = document.getElementById("copyRange")
 
 				const xyzDatas = []
+
+				// 加载地图
+				const { clearAndmark } = loadMap("container", {
+					markRadius: config.markRadius[0],
+					markColor: config.markColor[0],
+				})
+
+				// 阻塞加载坐标数据
+				const coordinate = await readCoordinate()
 
 				// ---------------------------------阻塞渲染图片DOM---------------------------------------------
 				const { updateSelectIdList, updateClickIdList, render } = pictureFunctionComponent(container)
@@ -128,6 +148,13 @@
 					},
 				])
 
+				const throttleWrapFn = throttle(
+					(markIds) =>
+						setTimeout(() => {
+							clearAndmark(coordinate, markIds)
+						}, 0),
+					100
+				)
 				//触发滑块和图片高亮的更新
 				function calcIds(target) {
 					const targetIds = xyzDatas
@@ -147,6 +174,9 @@
 						.map((item) => `${item.id}`)
 
 					updateSelectIdList(targetIds)
+
+					const markIds = targetIds.map((item) => parseInt(item))
+					throttleWrapFn(markIds)
 				}
 				//手动选择滑块之后的触发更新
 				useRangeInputCallback(() => {
@@ -154,6 +184,7 @@
 				})
 
 				function initAxisRange() {
+					record.isInit = true
 					ranges["x"].splice(0)
 					ranges["x"].push(0, 1)
 					ranges["y"].splice(0)
@@ -168,14 +199,14 @@
 					sliders[2].setValue(0, 0)
 					sliders[2].setValue(Math.pow(10, 15), 1)
 
-					calcIds(ranges)
 					updateClickIdList([])
 					updateSelectIdList([])
+					record.isInit = false
+					throttleWrapFn([])
 				}
 
 				// 绑定默认加载的点击事件
 				initRange.onclick = initAxisRange
-				copyRange.onclick = copyAxisRange
 			})
 		</script>
 	</body>

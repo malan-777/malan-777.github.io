@@ -1,12 +1,25 @@
 import resolvePictures from "./resolvePictures.js"
 import picCss from "./styles/picCss.js"
-import layoutCss from "./styles/layoutCss.js"
-
 const pictureFunctionComponent = (container) => {
 	const state = {
 		selectIdList: [],
 		container,
 		clickIdList: [],
+		rowCount: 0,
+		domArr: null,
+		resolvedDomArr: null,
+	}
+
+	const mouseRecord = {
+		startId: 0,
+		endId: 0,
+		isMousedown: false,
+		isMove: false,
+		selection: [],
+	}
+
+	function getClickIdList() {
+		return Array.from(new Set([...state.clickIdList, ...mouseRecord.selection]))
 	}
 
 	/**
@@ -38,6 +51,7 @@ const pictureFunctionComponent = (container) => {
 				tempImageDOM.src = path
 				tempImageDOM.classList.add("img")
 				tempImageDOM.setAttribute("id", index.toString())
+				tempImageDOM.setAttribute("dragable", false)
 
 				tempImageContainerDOM.classList.add("img_container")
 
@@ -51,8 +65,16 @@ const pictureFunctionComponent = (container) => {
 	/**
 	 * 用于将一些对象绑定到state中
 	 */
-	function bindState() {
+	function bindState(domArr, rowCount) {
 		state.container = container
+		state.domArr = domArr
+		state.rowCount = rowCount
+
+		const towDimensionalArr = []
+		for (let i = 0; i < state.domArr.length; i += state.rowCount) {
+			towDimensionalArr.push(state.domArr.slice(i, i + state.rowCount))
+		}
+		state.resolvedDomArr = towDimensionalArr
 	}
 
 	/**
@@ -62,22 +84,42 @@ const pictureFunctionComponent = (container) => {
 	 */
 	function renderDOMToContainer(domArray, count) {
 		let currentCount = 0
-
 		while (currentCount < count) {
 			container.appendChild(domArray[currentCount++])
 		}
+	}
+
+	function getTargetId(event) {
+		const { container } = state
+		const target = event.target
+		if (target === container || target === null) return
+		const targetId = target.getAttribute("id")
+		return targetId
+	}
+
+	function getImgDOMIDInContainer(container) {
+		return container.firstChild
+	}
+
+	function addNewClickIds(newAxisArr) {
+		if (newAxisArr.length === 0 || !(newAxisArr instanceof Array)) return
+		newAxisArr.forEach((item) => {
+			if (!state.clickIdList.includes(item)) {
+				state.clickIdList.push(item)
+			}
+		})
 	}
 
 	/**
 	 * 为容器绑定点击事件实现内部元素的事件委托，对不需要产生事件的元素可以再次排除或者在css里面排除pointer-events。
 	 */
 	function bindEventContainer() {
-		container.onclick = (event) => {
-			const { container, clickIdList } = state
-			//点击事件委托
-			const target = event.target
-			if (target === container || target === null) return
-			const targetId = target.getAttribute("id")
+		container.onmousedown = (event) => {
+			event.preventDefault()
+
+			const { clickIdList } = state
+
+			const targetId = getTargetId(event)
 
 			if (!clickIdList.includes(targetId)) {
 				clickIdList.push(targetId)
@@ -86,14 +128,65 @@ const pictureFunctionComponent = (container) => {
 				clickIdList.includes(targetId) && clickIdList.splice(0) && clickIdList.push(...tempSelectId)
 			}
 
-			state.clickIdList = [...clickIdList]
+			addNewClickIds(clickIdList)
+
+			// 记录选中的id
 			hightlightClickPic()
+			mouseRecord.isMousedown = true
+			mouseRecord.startId = targetId
+			mouseRecord.endId = targetId
+		}
+
+		container.onmousemove = (event) => {
+			event.preventDefault()
+			const id = getTargetId(event)
+			mouseRecord.endId = id
+
+			if (!mouseRecord.isMove && mouseRecord.endId === mouseRecord.startId) return
+
+			if (mouseRecord.isMousedown) {
+				mouseRecord.isMove = true
+				const startIdRowIndex = Math.floor(mouseRecord.startId / state.rowCount)
+				const endIdRowIndex = Math.floor(mouseRecord.endId / state.rowCount)
+				const startIdColumnIndex = mouseRecord.startId % state.rowCount
+				const endIdColumnIndex = mouseRecord.endId % state.rowCount
+
+				//得到所有xy坐标点
+				const axisArr = []
+				for (let i = Math.min(startIdRowIndex, endIdRowIndex); i < Math.max(startIdRowIndex, endIdRowIndex) + 1; i++) {
+					for (let j = Math.min(startIdColumnIndex, endIdColumnIndex); j < Math.max(startIdColumnIndex, endIdColumnIndex) + 1; j++) {
+						axisArr.push([i, j])
+					}
+				}
+
+				//selectionIds: 所有的id
+				const selectionIds = []
+				axisArr.forEach(([x, y]) => {
+					const target = state.resolvedDomArr[x][y]
+					selectionIds.push(getImgDOMIDInContainer(target).getAttribute("id"))
+				})
+
+				mouseRecord.selection = selectionIds
+				hightlightClickPic()
+			}
+		}
+
+		container.onmouseup = () => {
+			mouseRecord.isMousedown = false
+			mouseRecord.isMove = false
+			mouseRecord.selection.forEach((item) => {
+				if (!state.clickIdList.includes(item)) {
+					state.clickIdList.push(item)
+				}
+			})
+			mouseRecord.selection.splice(0)
 		}
 	}
 
 	function hightlightClickPic() {
-		const { clickIdList, container } = state
-		if (clickIdList.length === 0) {
+		const { container } = state
+		const clickIds = getClickIdList()
+		if (clickIds.length === 0) {
 			for (let i = 0; i < container.children.length; i++) {
 				const targetContainer = container.childNodes[i]
 				const target = targetContainer.childNodes[0]
@@ -105,7 +198,7 @@ const pictureFunctionComponent = (container) => {
 				const targetContainer = container.childNodes[i]
 				const target = targetContainer.childNodes[0]
 
-				if (clickIdList.includes(target.getAttribute("id"))) {
+				if (clickIds.includes(target.getAttribute("id"))) {
 					target.classList.add("mask_click")
 				} else {
 					target.classList.remove("mask_click")
@@ -147,9 +240,8 @@ const pictureFunctionComponent = (container) => {
 		const style = document.createElement("style")
 
 		const css = picCss(config)
-		const css2 = layoutCss(config)
 
-		style.innerHTML = css + css2
+		style.innerHTML = css
 
 		document.getElementsByTagName("head").item(0).appendChild(style)
 		document.getElementsByTagName("head").item(0).appendChild(style)
@@ -173,11 +265,11 @@ const pictureFunctionComponent = (container) => {
 	 * @param {*} path 渲染文件夹的路径
 	 * @param {*} count 渲染的数目
 	 */
-	function render(path, count, config) {
+	function render(path, count, rowCount, config) {
 		return new Promise((resolve) => {
 			const doms = createPictureDOM(path, count)
 
-			bindState()
+			bindState(doms, rowCount)
 			renderDOMToContainer(doms, count)
 			bindEventContainer()
 			injectCustomStyles(config)
@@ -187,6 +279,7 @@ const pictureFunctionComponent = (container) => {
 	}
 
 	return {
+		state,
 		render,
 		updateSelectIdList,
 		updateClickIdList,

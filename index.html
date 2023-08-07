@@ -6,115 +6,657 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<script src="./plugins/layui/layui.js"></script>
 		<link rel="stylesheet" href="./plugins/layui/css/layui.css" />
+		<link rel="stylesheet" href="./src/styles/page3.css" />
+
+		<link rel="stylesheet" href="./plugins/swiper/swiper-bundle.min.css" />
+		<script src="./plugins/swiper/swiper-bundle.min.js"></script>
 
 		<!-- 高德api -->
 		<script type="text/javascript">
 			window._AMapSecurityConfig = {
-				securityJsCode: "b8ebd424c760b6e6decfa854ba80c32a",
+				securityJsCode: "6653c0473726d0f1ab5b2ab0dbe162c4",
 			}
 		</script>
-		<script src="https://webapi.amap.com/maps?v=2.0&key=b2665e76905530969cb6a830bf3e4c45&plugin=AMap.DistrictSearch"></script>
+		<script src="https://cache.amap.com/lbs/static/es5.min.js"></script>
+		<script src="https://webapi.amap.com/maps?v=2.0&key=7262dc147356ba13dc72224c66a04e1d&plugin=AMap.DistrictSearch"></script>
 
-		<title>网页标题</title>
+		<title>Urban Streetscapes</title>
+
 		<style>
-			.load {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				line-height: 100px;
-				height: 100px;
-				font-size: 20px;
-				font-weight: 10px;
-				transition: all ease-in-out 0.05s;
-				white-space: nowrap;
-			}
-			.load.success {
-				height: 1rem;
+			/* 1. font-face 注册  2. font-family：使用 */
+			@font-face {
+				font-family: "BigShouldersInlineText-Black", "HarmonyOS_Sans_Thin";
+				src: url("static/BigShouldersInlineText-Black.ttf"), url("static/HarmonyOS_Sans_Thin.ttf");
 			}
 
-			.range_container {
+			* {
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+			}
+
+			body,
+			html {
+				height: 100%;
+				overflow: hidden;
+			}
+
+			.swiper {
+				height: 100vh;
+			}
+
+			.swiper-slide {
+				height: 100vh;
+				display: flex;
+				flex-direction: column;
+				overflow: hidden;
+			}
+
+			/* home_1页面内容 */
+
+			.home_pre {
+				/* margin: 0; */
+				/* padding: 50px 40px 10px 40px; */
+				width: 100%;
+				min-height: 100vh;
+				background: url("static/bg.jpg") no-repeat center;
+				/* background-position: right; */
+				background-size: cover;
 				overflow: hidden;
 				display: flex;
 				flex-direction: column;
-				width: 100%;
-				margin-top: 20px;
-				padding: 20px;
-				border: 2px solid rgba(0, 0, 0, 0.15);
-				border-radius: 2px;
-			}
-			.range_label {
-				margin-bottom: 8px;
-				white-space: pre-wrap;
-				word-wrap: break-word;
-			}
-			.range_btn {
-				width: 100%;
-				margin-bottom: 20px;
+				animation: bg 5s ease-in-out;
+				position: relative;
+				justify-content: center;
 			}
 
-			#container {
+			.home_pre > .content {
 				width: 100%;
+				position: absolute;
+				z-index: 1;
+				text-align: center;
+				color: rgb(250, 250, 250);
+				margin-top: -18%;
+				letter-spacing: 1px;
+				animation: title-animation 3.5s ease-in-out forwards;
+			}
+
+			.home_pre > .content > .heading {
+				font-family: "BigShouldersInlineText-Black";
+				font-weight: bolder;
+				font-size: 200px;
+				white-space: nowrap;
+				text-shadow: 4px 4px 4px #000000aa;
+			}
+
+			.home_pre::before {
+				width: 100%;
+				height: 100%;
+				content: "";
+				position: absolute;
+				animation: bg2 5s ease-in-out;
+				background: url("static/preground.png");
+				inset: 0;
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: cover;
+				overflow: hidden;
+				z-index: 2;
+			}
+
+			@media screen and (max-width: 768px) {
+				.home_pre > .content > .heading {
+					font-size: 60px;
+				}
+			}
+
+			@media screen and (max-width: 992px) {
+				.home_pre > .content > .heading {
+					font-size: 100px;
+				}
+			}
+
+			@media screen and (min-height: 1050px) {
+				.home_pre {
+					font-size: 18px;
+				}
+			}
+
+			@keyframes bg {
+				0% {
+					background-position: center -7em;
+					opacity: 0;
+				}
+				50% {
+					opacity: 1;
+				}
+				100% {
+					background-position: center;
+				}
+			}
+
+			@keyframes bg2 {
+				0% {
+					background-position: center -4em;
+					opacity: 1;
+				}
+				50% {
+					opacity: 1;
+				}
+				100% {
+					background-position: center;
+				}
+			}
+
+			@keyframes title-animation {
+				from {
+					transform: translateY(-30%);
+				}
+				to {
+					transform: translateY(-10%);
+				}
+			}
+
+			/* home_2页面内容 */
+
+			.home {
+				padding: 5px 40px 5px 50px;
+				width: 100%;
+				/* height: 100vh; */
+				background-color: rgb(240, 240, 240);
+				background-position: right;
+				background-size: cover;
+				overflow: auto;
+				display: flex;
+				flex-direction: column;
+			}
+
+			.home > .intro_pic {
+				width: 100%;
+				margin-bottom: 10px;
+			}
+
+			.home > .content {
+				padding: 0 100px 0 100px;
+				width: 100%;
+			}
+
+			/* 嵌入文本中的容器 */
+			.content_embedded {
+				float: left;
+				margin: 0 20px 20px 0;
+				padding-top: 10px;
+			}
+
+			.content_embedded > .content_pic {
+				margin-top: -130px;
+				width: 400px;
+			}
+
+			.content_embedded > .video_area > video {
+				width: 500px;
+			}
+
+			.home > .content > .text_area_1 {
 				flex: 1;
+				/* 下外边距 */
+				/* margin-bottom: 1px; */
+				margin-top: 20px;
+				text-align: center;
+				line-height: 60px;
+				font-weight: bold;
+				font-size: 30px;
+				color: #444444;
+			}
+
+			.home > .content > .text_area_2 {
+				/* 下外边距 */
+				font-family: "HarmonyOS_Sans_Thin";
+				text-align:justify;
+				margin-top: 15px;
+				margin-bottom: 5px;
+				line-height: 30px;
+				font-weight: normal;
+				font-size: 16px;
+				color: #444444;
+			}
+
+			.home > .content > .text_area_2 > .pic_text {
+				/* 下外边距 */
+				font-family: "HarmonyOS_Sans_Thin";
+				text-align:left;
+				margin-top: 5px;
+				margin-bottom: 5px;
+				line-height: 10px;
+				font-weight: normal;
+				font-size: 10px;
+				color: #444444;
+			}
+
+			/* gallery */
+			.content_gallery {
+				display: flex;
+				width: 50%;
+				gap: 10px;
+			}
+
+			.content_gallery > .gallery_item {
+				flex: 1;
+				display: block;
+				clear: both;
+				margin-top: 10px;
+			}
+
+			.gallery_item > img {
+				width: 100%;
+			}
+
+			.home > .content > .video_area {
+				overflow: hidden;
+			}
+
+			/* 视频和文字统一设置样式 */
+			.text_area_1,
+			.text_area_2,
+			.video_area {
+				/* 圆角 */
+				border-radius: 0px;
+				/* 内边距 */
+				padding: 3px;
+			}
+
+			/* .video_area > video {
+				width: 100%;
+				height: 100%;
+				object-fit: contain;
+				/* contain 让视频总是完全显示
+				   cover 让视频总是铺满,内容会被裁剪
+				   fill 让视频总是铺满,宽高比会被改变
+				*/
+			/* } */
+
+			/* 滑块内部样式 */
+			.range_btn_group {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				margin-bottom: 18px;
+				font-size: 4px;
+				color: #000;
+			}
+
+			.range_item {
+				border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+				padding-bottom: 20px;
+				margin-bottom: 20px;
+			}
+			/*  ---------------------------------------------- 切换按钮 ------------------------------------- */
+			/* 第一页 */
+			.explore_menu {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				margin: 300px;
+				z-index: 3;
+			}
+			.explore_btn {
+				color: rgb(207, 111, 9);
+				background: #fff;
+				width: 20%;
+				height: 30px;
+				padding: 8px 20px;
+				border-radius: 3em;
+				font-weight: bold;
+				transition: all ease-in-out 0.15s;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				cursor: pointer;
+				/* 按钮位置 */
+				position: absolute;
+				bottom: 10%;
+			}
+
+			.pexplore_btn.white {
+				color: rgb(207, 111, 9);
+			}
+
+			.explore_btn.white:hover {
+				color: #fff;
+				background-color: rgb(207, 111, 9);
+			}
+
+			/* 第二页 */
+			.page_menu {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				margin: 2px 0;
+			}
+
+			.page_change_btn {
+				width: 100%;
+				height: min-content;
+				padding: 8px 20px;
+				border-radius: 2px;
+				background-color: transparent;
+				border: none;
+				font-weight: bold;
+				transition: all ease-in-out 0.15s;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				cursor: pointer;
+			}
+
+			/* 按钮内图标 */
+			.page_change_btn > .menu_icon {
+				color: #fff;
+				height: 1rem;
+				width: 1rem;
+				margin: 0 10px;
+			}
+
+			/* 设置文字颜色为浅色，hover后浅色 */
+			.page_change_btn.white {
+				color: #fff;
+			}
+
+			.page_change_btn.white:hover {
+				color: aqua;
+				background-color: rgba(255, 255, 255, 0.149);
+			}
+
+			/* 设置文字颜色为深色，hover后深色 */
+
+			.page_change_btn.black {
+				color: #fff;
+			}
+
+			.page_change_btn.black:hover {
+				color: aqua;
+				background-color: rgba(255, 255, 255, 0.149);
+			}
+
+			/* 图标均用向下的图标，向上设置旋转180°*/
+			.page_change_btn.pre > .menu_icon {
+				color: #fff;
+				transform: rotate(180deg);
 			}
 		</style>
 	</head>
+
 	<body>
-		<div class="app">
-			<div class="aside">
-				<div class="load" id="load" value-success="加载完成，开始使用">数据加载中</div>
-				<div class="range_container">
-					<div class="layui-btn-container">
-						<div class="layui-btn layui-btn-primary" id="initRange">初始化</div>
+		<div class="swiper swiper-no-swiping">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide">
+					<div class="home_pre">
+						<div class="content">
+							<div class="heading">HONG KONG</div>
+						</div>
+						<div class="explore_menu">
+							<div class="explore_btn next white" id="next-page">
+								<span> EXPLORE </span>
+							</div>
+						</div>
 					</div>
-					<div class="range_label" id="x-label">x坐标：[0,1]</div>
-					<div class="range_btn" id="range-btn-x"></div>
-					<div class="range_label" id="y-label">y坐标：[0,1]</div>
-					<div class="range_btn" id="range-btn-y"></div>
-					<div class="range_label" id="z-label">z坐标：[0,1]</div>
-					<div class="range_btn" id="range-btn-z"></div>
 				</div>
-				<div id="container"></div>
-			</div>
-			<div class="main">
-				<div class="pics" id="pics"></div>
+
+				<div class="swiper-slide">
+					<div class="home">
+						<div class="page_menu">
+							<div class="page_change_btn pre black" id="pre-page">
+								<img class="menu_icon" src="static/icon/next_black.svg" />
+								<span>Last Page</span>
+							</div>
+						</div>
+
+						<img class="intro_pic" src="./static/hongkong3.jpg" alt="" />
+						<div class="content">
+							<!-- 嵌入容器 + 图片 -->
+							<div class="content_embedded">
+								<img class="content_pic" src="./static/page2-title.png" />
+							</div>
+
+							<!-- 文本内容 -->
+							<div class="text_area_1">基于 视觉复杂度 的  香港"城市街景索引"</div>
+							<div class="text_area_2">
+								通过在线街景来探索城市形象已不是什么新鲜事儿了，谷歌街景、百度街景等地图应用便可以实现足不出户地轻松浏览世界各地。
+								如今，社会的信息数字化发展已进入快车道，人们对城市形象探索有了更高的需求，例如，快速搜索特定街景、智能交互城市环境，明智决策规划发展。 
+								然而，现有的在线街景应用却无法摆脱线性单一的探索模式，人们只能被限制在虚拟的街道上单向点击前进，无法对城市形象进行多样化的交互探索体验。 
+								因此，我们开发了一个“城市街景索引”应用，通过收集、分析和描述整个城市街景的视觉信息数据流，以达到灵活、多维度、高效地深入挖掘城市视觉环境特征的目的，从而改变现代城市形象的管理与探索的方式。
+								<br /><br />街景的数字信息化需要对街景进行视觉特征的提取与量化。对此，我们着眼于街景的纹理、形状、色彩这三个基于感知的视觉特征，并以视觉复杂度的方式去量化。这样做的原因有三：
+								<br /><br />1. 凯文林奇在《城市意象》中提出，沿街的砖墙老屋、门前的热闹集市、街边的葱郁大树等，这些具有不同纹理、形状、色彩与组合模式的视觉肌理，往往会形成生动、强烈的心理图像，
+								是强化城市意象性(imageability)与易辨性(legibility)的感知方式。因此，纹理、形状、色彩是认识城市意象、印象、风貌形象的典型视觉特征。
+								<br /><br />2. 在以往对城市街景与人类认知的耦合研究中，不难发现“视觉复杂度”可被看作是街景多种认知体验的底层逻辑与描述机制。因此，视觉复杂度是视觉信息传递中数量与能量的有效量化方式。
+								<br /> 
+								<!-- 多张图片并排排列的图片墙 -->
+								<div class="content_gallery">
+									<div class="gallery_item">
+										<img src="./static/page2-1a.png" />
+									</div>
+								</div>
+
+								<div class="pic_text">“安全性”由低到高的街景（图片来源：[1]）</div>
+
+								<div class="content_gallery">
+									<div class="gallery_item">
+										<img src="./static/page2-1b.png" />
+									</div>
+								</div>
+
+								<div class="pic_text">“视觉质量”感知由低到高的街景（图片来源：[2]）</div>
+
+								<div class="content_gallery">
+									<div class="gallery_item">
+										<img src="./static/page2-1c.png" />
+									</div>
+								</div>
+
+								<div class="pic_text">“美观性”感知由低到高的街景（图片来源：[3]）</div>
+
+								<div class="content_gallery">
+									<div class="gallery_item">
+										<img src="./static/page2-1d.png" />
+									</div>
+								</div>
+
+								<div class="pic_text">“疗愈性”感知由低到高的街景（图片来源：[4]）</div>
+
+								<br />3.目前，数字语境下的街景解析通常依靠语义分割认知，即提取街景的天空、建筑、植物、道路等物质构成特征，并以其各自的像素占比来量化。但这种方法只能描述街景的“形态”，却并不能抓住街景的“神韵”。因此，街景纹理、形状、色彩特征的视觉复杂度“另辟蹊径”，为城市形象认知提供了一个新颖的探索角度。同时，也可作为现有方法的有效补充，在数字语境下更全面的掌握城市街景形象。
+
+								<div class="content_gallery">
+									<div class="gallery_item">
+										<img src="./static/page2-2a.png" />
+									</div>
+								</div>
+								<div class="content_gallery">
+									<div class="gallery_item">
+										<img src="./static/page2-2b.png" />
+									</div>
+								</div>
+
+								<div class="pic_text">物质构成相似的街景却有着完全不同的视觉感受</div>
+
+								<!-- 嵌入容器 + 视频 -->
+								<div class="content_embedded">
+									<div class="video_area">
+										<video src="static/video.mp4" controls></video>
+									</div>
+								</div>
+								<br />文字
+							</div>
+						</div>
+
+						<div class="page_menu">
+							<div class="page_change_btn next white" id="next-page">
+								<img class="menu_icon" src="static/icon/next_white.svg" alt="" />
+								<span> Next Page</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="swiper-slide">
+					<div class="app">
+						<div class="aside">
+							<!-- <div class="load" id="load" value-success="HongKong Streetscape Indexing">Loading</div> -->
+							<div class="range_container">
+								<div class="range_item">
+									<div class="label_container">
+										<div class="range_label" id="x-label">纹理 Texture：</div>
+										<span class="label_container_tips">tips</span>
+									</div>
+									<div class="range_btn_group">
+										<span>低</span>
+										<div class="range_btn" id="range-btn-x"></div>
+										<span>高</span>
+									</div>
+								</div>
+								<div class="range_item">
+									<div class="label_container">
+										<div class="range_label" id="y-label">形状 Shape：</div>
+										<span class="label_container_tips">tips</span>
+									</div>
+									<div class="range_btn_group">
+										<span>低</span>
+										<div class="range_btn" id="range-btn-y"></div>
+										<span>高</span>
+									</div>
+								</div>
+								<div class="range_item">
+									<div class="label_container">
+										<div class="range_label" id="z-label">色彩 Color：</div>
+										<span class="label_container_tips">tips</span>
+									</div>
+									<div class="range_btn_group">
+										<span>低</span>
+										<div class="range_btn" id="range-btn-z"></div>
+										<span>高</span>
+									</div>
+								</div>
+								<div class="layui-btn-container">
+									<div class="layui-btn layui-btn-left layui-btn-primary layui-btn-custom" id="init-btn">DEFAULT</div>
+									<div class="layui-btn layui-btn-right layui-btn-primary layui-btn-custom" id="draw-btn">Find Geo-location</div>
+								</div>
+							</div>
+							<div id="container" style="height: 500px"></div>
+						</div>
+						<div class="main">
+							<div class="page_menu">
+								<div class="page_change_btn pre black" id="pre-page">
+									<img class="menu_icon" src="static/icon/next_black.svg" />
+									<span>Last Page</span>
+								</div>
+							</div>
+							<!-- 图片渲染容器 -->
+							<div class="pics" id="pics"></div>
+							<div class="page_menu">
+								<div class="page_change_btn next black" id="next-page">
+									<img class="menu_icon" src="static/icon/next_black.svg" alt="" />
+									<span>Next Page</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 
 		<script type="module">
 			import resolvePictures from "./src/resolvePictures.js"
 			import pictureFunctionComponent from "./src/pictrueFunctionComponent.js"
+			import rangeFunctionComponent from "./src/rangeFunctionComponent.js"
 			import resolveConfig from "./src/resolveConfig.js"
 			import resolveXLSX from "./src/resolveXLSX.js"
 			import readData from "./src/readData.js"
-			import { useRangeInput, useRangeInputCallback, ranges, record } from "./src/useRangeInput.js"
+			import { useRangeInput, useRangeInputCallback, ranges } from "./src/useRangeInput.js"
 			import { loadMap, readCoordinate } from "./src/loadMap.js"
-			import { throttle } from "./src/useThrottle.js"
+			import useSwiper from "./src/useSwiper.js"
 
 			// ---------------------------------加载可自定义配置文件---------------------------------------------
 			resolveConfig("./config.json").then(async (config) => {
 				// ------------------------------统一获取dom元素------------------------------------------
 				const container = document.getElementById("pics")
 				const rangeContainer = document.getElementById("range-container")
-				const load = document.getElementById("load")
+				// const load = document.getElementById("load")
 				const axisX = document.getElementById("x-label")
 				const axisY = document.getElementById("y-label")
 				const axisZ = document.getElementById("z-label")
-				const initRange = document.getElementById("initRange")
+				const initBtn = document.getElementById("init-btn")
+				const drawBtn = document.getElementById("draw-btn")
 
-				const xyzDatas = []
+				const prePage = document.querySelectorAll("#pre-page")
+				const nextPage = document.querySelectorAll("#next-page")
 
+				const xyzDatas = [] //加载完的3个表格的数据
+
+				// ----------------------------侧边栏坐标范围条-----------------------------------------
+				function setPosition(targetXYZ) {
+					const { targetX, targetY, targetZ } = targetXYZ
+					axisX.innerText = `纹理 Texture：[${targetX[0]},${targetX[1]}]`
+					axisY.innerText = `形状 Shape：[${targetY[0]},${targetY[1]}]`
+					axisZ.innerText = `色彩 Color：[${targetZ[0]},${targetZ[1]}]`
+				}
+
+				const sliders = useRangeInput(
+					[
+						{
+							id: "#range-btn-x",
+							index: "x",
+						},
+						{
+							id: "#range-btn-y",
+							index: "y",
+						},
+						{
+							id: "#range-btn-z",
+							index: "z",
+						},
+					],
+					{
+						defaultRangeLeft: config.rangeDefaultValue[0][0],
+						defaultRangeRight: config.rangeDefaultValue[0][1],
+					},
+					() => {
+						const defaultValue = config.rangeDefaultValue[0]
+						setPosition({
+							targetX: defaultValue,
+							targetY: defaultValue,
+							targetZ: defaultValue,
+						})
+					}
+				)
+
+				//页面滚动
+				const { slideNext, slidePrev } = useSwiper({
+					query: ".swiper",
+				})
+
+				for (let i = 0; i < prePage.length; i++) {
+					prePage[i].onclick = () => {
+						slidePrev()
+					}
+				}
+
+				for (let i = 0; i < nextPage.length; i++) {
+					nextPage[i].onclick = () => {
+						slideNext()
+					}
+				}
 				// 加载地图
 				const { clearAndmark } = loadMap("container", {
 					markRadius: config.markRadius[0],
-					markColor: config.markColor[0],
 				})
 
 				// 阻塞加载坐标数据
 				const coordinate = await readCoordinate()
 
 				// ---------------------------------阻塞渲染图片DOM---------------------------------------------
-				const { updateSelectIdList, updateClickIdList, render } = pictureFunctionComponent(container)
-				await render(config.path[0], config.count[0], config) //路径和需要渲染的图片数目
+				const { updateSelectIdList, updateClickIdList, render, state } = pictureFunctionComponent(container)
+				await render(config.path[0], config.count[0], config.numberPerRow[0], config) //路径和需要渲染的图片数目
+
+				// ----------------------------坐标数据-----------------------------------------
+				const { calcIds, setXyzDatas } = rangeFunctionComponent()
 
 				// ---------------------------------阻塞加载表格数据---------------------------------------------
 				await readData("./data", ["C1.xlsx", "C2.xlsx", "C3.xlsx"]).then((res) => {
@@ -127,86 +669,51 @@
 						}
 					})
 
-					load.innerText = load.getAttribute("value-success")
-					load.classList.add("success")
-					xyzDatas.push(...datas)
+					// load.innerText = load.getAttribute("value-success")
+					// load.classList.add("success")
+					setXyzDatas(datas)
 				})
 
-				// ----------------------------侧边栏坐标范围条-----------------------------------------
-				const sliders = useRangeInput([
-					{
-						id: "#range-btn-x",
-						index: "x",
-					},
-					{
-						id: "#range-btn-y",
-						index: "y",
-					},
-					{
-						id: "#range-btn-z",
-						index: "z",
-					},
-				])
+				// ----------------------------侧边栏地图-----------------------------------------
 
-				const throttleWrapFn = throttle(
-					(markIds) =>
-						setTimeout(() => {
-							clearAndmark(coordinate, markIds)
-						}, 0),
-					100
-				)
-				//触发滑块和图片高亮的更新
-				function calcIds(target) {
-					const targetIds = xyzDatas
-						.filter((item, index) => {
-							const { x, y, z } = item
-
-							const targetX = target["x"]
-							const targetY = target["y"]
-							const targetZ = target["z"]
-
-							axisX.innerText = `x坐标：[${targetX[0]},${targetX[1]}]`
-							axisY.innerText = `y坐标：[${targetY[0]},${targetY[1]}]`
-							axisZ.innerText = `z坐标：[${targetZ[0]},${targetZ[1]}]`
-
-							return x >= targetX[0] && x <= targetX[1] && y >= targetY[0] && y <= targetY[1] && z >= targetZ[0] && z <= targetZ[1]
-						})
-						.map((item) => `${item.id}`)
-
-					updateSelectIdList(targetIds)
-
-					const markIds = targetIds.map((item) => parseInt(item))
-					throttleWrapFn(markIds)
-				}
 				//手动选择滑块之后的触发更新
 				useRangeInputCallback(() => {
-					calcIds(ranges)
+					// 计算处于滑块中的内容 -> 更新处于滑块中的图片的高亮状态
+					const targetIds = calcIds(ranges, (targetXYZ) => {
+						const { targetX, targetY, targetZ } = targetXYZ
+						setPosition(targetXYZ)
+					})
+					updateSelectIdList(targetIds)
 				})
 
+				//初始化滑块
 				function initAxisRange() {
-					record.isInit = true
-					ranges["x"].splice(0)
-					ranges["x"].push(0, 1)
-					ranges["y"].splice(0)
-					ranges["y"].push(0, 1)
-					ranges["z"].splice(0)
-					ranges["z"].push(0, 1)
+					const rangeDefaultValue = config.rangeDefaultValue[0]
 
-					sliders[0].setValue(0, 0)
-					sliders[0].setValue(Math.pow(10, 15), 1)
-					sliders[1].setValue(0, 0)
-					sliders[1].setValue(Math.pow(10, 15), 1)
-					sliders[2].setValue(0, 0)
-					sliders[2].setValue(Math.pow(10, 15), 1)
+					;["x", "y", "z"].forEach((index) => {
+						ranges[index].splice(0)
+						ranges[index].push(rangeDefaultValue)
+					})
+					;[0, 1, 2].forEach((index) => {
+						sliders[index].setValue(rangeDefaultValue[0] * Math.pow(10, 15), 0)
+						sliders[index].setValue(rangeDefaultValue[1] * Math.pow(10, 15), 1)
+					})
 
 					updateClickIdList([])
 					updateSelectIdList([])
-					record.isInit = false
-					throttleWrapFn([])
+					drawMarker()
+				}
+
+				// 标记点
+				function drawMarker() {
+					const markIds = [...state.selectIdList.map((selectId) => parseInt(selectId)), ...state.clickIdList.map((clickId) => parseInt(clickId))]
+
+					clearAndmark(coordinate, markIds)
 				}
 
 				// 绑定默认加载的点击事件
-				initRange.onclick = initAxisRange
+				initBtn.onclick = initAxisRange
+				drawBtn.onclick = drawMarker
 			})
 		</script>
 	</body>

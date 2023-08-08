@@ -55,12 +55,9 @@
 			/* home_1页面内容 */
 
 			.home_pre {
-				/* margin: 0; */
-				/* padding: 50px 40px 10px 40px; */
 				width: 100%;
 				min-height: 100vh;
 				background: url("static/bg.jpg") no-repeat center;
-				/* background-position: right; */
 				background-size: cover;
 				overflow: hidden;
 				display: flex;
@@ -162,11 +159,12 @@
 			.home {
 				padding: 5px 40px 5px 50px;
 				width: 100%;
-				/* height: 100vh; */
+				
 				background-color: rgb(240, 240, 240);
 				background-position: right;
 				background-size: cover;
 				overflow: auto;
+				
 				display: flex;
 				flex-direction: column;
 			}
@@ -179,6 +177,10 @@
 			.home > .content {
 				padding: 0 100px 0 100px;
 				width: 100%;
+			}
+
+			.home > .content ::selection {
+				background-color: rgb(207, 111, 9);
 			}
 
 			/* 嵌入文本中的容器 */
@@ -229,7 +231,7 @@
 				margin-bottom: 5px;
 				line-height: 10px;
 				font-weight: normal;
-				font-size: 10px;
+				font-size: 13px;
 				color: #444444;
 			}
 
@@ -265,16 +267,6 @@
 				padding: 3px;
 			}
 
-			/* .video_area > video {
-				width: 100%;
-				height: 100%;
-				object-fit: contain;
-				/* contain 让视频总是完全显示
-				   cover 让视频总是铺满,内容会被裁剪
-				   fill 让视频总是铺满,宽高比会被改变
-				*/
-			/* } */
-
 			/* 滑块内部样式 */
 			.range_btn_group {
 				display: flex;
@@ -292,14 +284,17 @@
 			}
 			/*  ---------------------------------------------- 切换按钮 ------------------------------------- */
 			/* 第一页 */
-			.explore_menu {
+			.lang_buttons {
 				display: flex;
+				flex-direction: column;
 				justify-content: center;
 				align-items: center;
-				margin: 300px;
+				margin-top: auto;
+				width: 100%;
 				z-index: 3;
 			}
-			.explore_btn {
+
+			.lang_btn {
 				color: rgb(207, 111, 9);
 				background: #fff;
 				width: 20%;
@@ -312,16 +307,24 @@
 				justify-content: center;
 				align-items: center;
 				cursor: pointer;
-				/* 按钮位置 */
-				position: absolute;
-				bottom: 10%;
+				margin-top: auto;
+				margin: auto 10px 100px 10px;
+				border:none;
 			}
 
-			.pexplore_btn.white {
+			.lang_btn:nth-child(1) {
+				margin-bottom: 15px;
+			}
+
+			.lang_btn:nth-child(2) {
+				margin-bottom: 100px;
+			}
+
+			.lang_btn.white {
 				color: rgb(207, 111, 9);
 			}
 
-			.explore_btn.white:hover {
+			.lang_btn.white:hover {
 				color: #fff;
 				background-color: rgb(207, 111, 9);
 			}
@@ -394,10 +397,9 @@
 						<div class="content">
 							<div class="heading">HONG KONG</div>
 						</div>
-						<div class="explore_menu">
-							<div class="explore_btn next white" id="next-page">
-								<span> EXPLORE </span>
-							</div>
+						<div class="lang_buttons">
+							<button id="lang-btn" class="lang_btn next white" data-lang="en">EXPLORE（Englishg）</button>
+							<button id="lang-btn" class="lang_btn next white" data-lang="zh">探索（中文）</button>
 						</div>
 					</div>
 				</div>
@@ -407,7 +409,7 @@
 						<div class="page_menu">
 							<div class="page_change_btn pre black" id="pre-page">
 								<img class="menu_icon" src="static/icon/next_black.svg" />
-								<span>Last Page</span>
+								<p lang-id="lastMenu">Last Page</p>
 							</div>
 						</div>
 
@@ -419,17 +421,23 @@
 							</div>
 
 							<!-- 文本内容 -->
-							<div class="text_area_1">基于 视觉复杂度 的  香港"城市街景索引"</div>
+							<div class="text_area_1">
+								<p lang-id="contentTitle">基于 视觉复杂度 的  香港"城市街景索引"</p>
+							</div>
 							<div class="text_area_2">
-								通过在线街景来探索城市形象已不是什么新鲜事儿了，谷歌街景、百度街景等地图应用便可以实现足不出户地轻松浏览世界各地。
-								如今，社会的信息数字化发展已进入快车道，人们对城市形象探索有了更高的需求，例如，快速搜索特定街景、智能交互城市环境，明智决策规划发展。 
-								然而，现有的在线街景应用却无法摆脱线性单一的探索模式，人们只能被限制在虚拟的街道上单向点击前进，无法对城市形象进行多样化的交互探索体验。 
-								因此，我们开发了一个“城市街景索引”应用，通过收集、分析和描述整个城市街景的视觉信息数据流，以达到灵活、多维度、高效地深入挖掘城市视觉环境特征的目的，从而改变现代城市形象的管理与探索的方式。
-								<br /><br />街景的数字信息化需要对街景进行视觉特征的提取与量化。对此，我们着眼于街景的纹理、形状、色彩这三个基于感知的视觉特征，并以视觉复杂度的方式去量化。这样做的原因有三：
-								<br /><br />1. 凯文林奇在《城市意象》中提出，沿街的砖墙老屋、门前的热闹集市、街边的葱郁大树等，这些具有不同纹理、形状、色彩与组合模式的视觉肌理，往往会形成生动、强烈的心理图像，
-								是强化城市意象性(imageability)与易辨性(legibility)的感知方式。因此，纹理、形状、色彩是认识城市意象、印象、风貌形象的典型视觉特征。
-								<br /><br />2. 在以往对城市街景与人类认知的耦合研究中，不难发现“视觉复杂度”可被看作是街景多种认知体验的底层逻辑与描述机制。因此，视觉复杂度是视觉信息传递中数量与能量的有效量化方式。
-								<br /> 
+								<p lang-id="contentText_1">
+									正文1
+								</p>
+								<!-- 多张图片并排排列的图片墙 -->
+								<div class="content_gallery">
+									<div class="gallery_item">
+										<img src="./static/page2-0.png" />
+									</div>
+								</div>
+
+								<p lang-id="contentText_2">
+									正文2
+								</p>
 								<!-- 多张图片并排排列的图片墙 -->
 								<div class="content_gallery">
 									<div class="gallery_item">
@@ -437,7 +445,9 @@
 									</div>
 								</div>
 
-								<div class="pic_text">“安全性”由低到高的街景（图片来源：[1]）</div>
+								<div class="pic_text">“安全性”由低到高的街景
+									<a href="https://ieeexplore.ieee.org/document/6910072/">（图片来源：Nikhil Naik, et al, 2014）</a>
+								</div>
 
 								<div class="content_gallery">
 									<div class="gallery_item">
@@ -445,7 +455,9 @@
 									</div>
 								</div>
 
-								<div class="pic_text">“视觉质量”感知由低到高的街景（图片来源：[2]）</div>
+								<div class="pic_text">“视觉质量”感知由低到高的街景
+									<a href="https://journals.sagepub.com/doi/10.1177/2399808319828734">（图片来源：Yu Ye, et al, 2019）</a>
+								</div>
 
 								<div class="content_gallery">
 									<div class="gallery_item">
@@ -453,7 +465,9 @@
 									</div>
 								</div>
 
-								<div class="pic_text">“美观性”感知由低到高的街景（图片来源：[3]）</div>
+								<div class="pic_text">“美观性”感知由低到高的街景
+									<a href="https://link.springer.com/chapter/10.1007/978-3-319-46448-0_12">（图片来源：Abhimanyu Dubey, et al, 2016）</a>
+								</div>
 
 								<div class="content_gallery">
 									<div class="gallery_item">
@@ -461,7 +475,9 @@
 									</div>
 								</div>
 
-								<div class="pic_text">“疗愈性”感知由低到高的街景（图片来源：[4]）</div>
+								<div class="pic_text">“疗愈性”感知由低到高的街景
+									<a href="https://kns.cnki.net/kcms2/article/abstract?v=3uoqIhG8C44YLTlOAiTRKibYlV5Vjs7i8oRR1PAr7RxjuAJk4dHXoklUCXziRe4nN7iQdbUpdIjhufeCZIXbCx8HnDWJU4U9&uniplatform=NZKPT">（图片来源：徐磊青, 等, 2020）</a>
+								</div>
 
 								<br />3.目前，数字语境下的街景解析通常依靠语义分割认知，即提取街景的天空、建筑、植物、道路等物质构成特征，并以其各自的像素占比来量化。但这种方法只能描述街景的“形态”，却并不能抓住街景的“神韵”。因此，街景纹理、形状、色彩特征的视觉复杂度“另辟蹊径”，为城市形象认知提供了一个新颖的探索角度。同时，也可作为现有方法的有效补充，在数字语境下更全面的掌握城市街景形象。
 
@@ -484,14 +500,16 @@
 										<video src="static/video.mp4" controls></video>
 									</div>
 								</div>
-								<br />文字
+								<p lang-id="contentText_3">
+									3.目前，数字语境下的街景解析通常依靠语义分割认知，即提取街景的天空、建筑、植物、道路等物质构成特征，并以其各自的像素占比来量化。但这种方法只能描述街景的“形态”，却并不能抓住街景的“神韵”。因此，街景纹理、形状、色彩特征的视觉复杂度“另辟蹊径”，为城市形象认知提供了一个新颖的探索角度。同时，也可作为现有方法的有效补充，在数字语境下更全面的掌握城市街景形象。
+								</p>
 							</div>
 						</div>
 
 						<div class="page_menu">
 							<div class="page_change_btn next white" id="next-page">
 								<img class="menu_icon" src="static/icon/next_white.svg" alt="" />
-								<span> Next Page</span>
+								<p id="nextMenu">Next Page</p>
 							</div>
 						</div>
 					</div>
@@ -503,40 +521,40 @@
 							<div class="range_container">
 								<div class="range_item">
 									<div class="label_container">
-										<div class="range_label" id="x-label">纹理 Texture：</div>
+										<div class="range_label" id="x-label" lang-id="texture">纹理：</div>
 										<span class="label_container_tips">tips</span>
 									</div>
 									<div class="range_btn_group">
-										<span>低</span>
+										<span lang-id="range_btn_low">低</span>
 										<div class="range_btn" id="range-btn-x"></div>
-										<span>高</span>
+										<span lang-id="range_btn_hign">高</span>
 									</div>
 								</div>
 								<div class="range_item">
 									<div class="label_container">
-										<div class="range_label" id="y-label">形状 Shape：</div>
+										<div class="range_label" id="y-label" lang-id="shape">形状：</div>
 										<span class="label_container_tips">tips</span>
 									</div>
 									<div class="range_btn_group">
-										<span>低</span>
+										<span lang-id="range_btn_low">低</span>
 										<div class="range_btn" id="range-btn-y"></div>
-										<span>高</span>
+										<span lang-id="range_btn_hign">高</span>
 									</div>
 								</div>
 								<div class="range_item">
 									<div class="label_container">
-										<div class="range_label" id="z-label">色彩 Color：</div>
+										<div class="range_label" id="z-label" lang-id="color">色彩：</div>
 										<span class="label_container_tips">tips</span>
 									</div>
 									<div class="range_btn_group">
-										<span>低</span>
+										<span lang-id="range_btn_low">低</span>
 										<div class="range_btn" id="range-btn-z"></div>
-										<span>高</span>
+										<span lang-id="range_btn_hign">高</span>
 									</div>
 								</div>
 								<div class="layui-btn-container">
-									<div class="layui-btn layui-btn-left layui-btn-primary layui-btn-custom" id="init-btn">DEFAULT</div>
-									<div class="layui-btn layui-btn-right layui-btn-primary layui-btn-custom" id="draw-btn">Find Geo-location</div>
+									<div class="layui-btn layui-btn-left layui-btn-primary layui-btn-custom" id="init-btn" lang-id="default">DEFAULT</div>
+									<div class="layui-btn layui-btn-right layui-btn-primary layui-btn-custom" id="draw-btn" lang-id="find">Find Geo-location</div>
 								</div>
 							</div>
 							<div id="container" style="height: 500px"></div>
@@ -573,6 +591,60 @@
 			import { loadMap, readCoordinate } from "./src/loadMap.js"
 			import useSwiper from "./src/useSwiper.js"
 
+			//上一页和下一页按钮
+			const prePage = document.querySelectorAll("#pre-page")
+			const nextPage = document.querySelectorAll("#next-page")
+
+			//页面滚动
+			const { slideNext, slidePrev } = useSwiper({
+				query: ".swiper",
+			})
+
+			for (let i = 0; i < prePage.length; i++) {
+				prePage[i].onclick = () => {
+					slidePrev()
+				}
+			}
+
+			for (let i = 0; i < nextPage.length; i++) {
+				nextPage[i].onclick = () => {
+					slideNext()
+				}
+			}
+
+			const LANGUAGE_KEY = "_lang"
+			//加载语言的内容
+			async function loadLangContent() {
+				const lang = window.localStorage.getItem(LANGUAGE_KEY) || "en" || "zh"
+
+				const langConfig = await import("./langConfig.js").then((res) => res.default)
+
+				console.log(langConfig)
+				const elementIds = Object.keys(langConfig)
+				elementIds.forEach((elementId) => {
+					const target = document.querySelectorAll(`[lang-id=${elementId}]`)
+
+					if (!(target instanceof HTMLElement)) {
+						for (let i = 0; i < target.length; i++) {
+							target[i].innerHTML = langConfig[elementId][lang]
+						}
+					} else {
+						target[i].innerHTML = langConfig[elementId][lang]
+					}
+				})
+			}
+
+			//语言按钮
+			const langBtns = document.querySelectorAll("#lang-btn")
+			langBtns.forEach((btn) => {
+				btn.addEventListener("click", () => {
+					console.log(btn.dataset.lang)
+					window.localStorage.setItem(LANGUAGE_KEY, btn.dataset.lang || "en" || "zh")
+					loadLangContent()
+					slideNext()
+				})
+			})
+
 			// ---------------------------------加载可自定义配置文件---------------------------------------------
 			resolveConfig("./config.json").then(async (config) => {
 				// ------------------------------统一获取dom元素------------------------------------------
@@ -584,9 +656,6 @@
 				const axisZ = document.getElementById("z-label")
 				const initBtn = document.getElementById("init-btn")
 				const drawBtn = document.getElementById("draw-btn")
-
-				const prePage = document.querySelectorAll("#pre-page")
-				const nextPage = document.querySelectorAll("#next-page")
 
 				const xyzDatas = [] //加载完的3个表格的数据
 
@@ -627,22 +696,6 @@
 					}
 				)
 
-				//页面滚动
-				const { slideNext, slidePrev } = useSwiper({
-					query: ".swiper",
-				})
-
-				for (let i = 0; i < prePage.length; i++) {
-					prePage[i].onclick = () => {
-						slidePrev()
-					}
-				}
-
-				for (let i = 0; i < nextPage.length; i++) {
-					nextPage[i].onclick = () => {
-						slideNext()
-					}
-				}
 				// 加载地图
 				const { clearAndmark } = loadMap("container", {
 					markRadius: config.markRadius[0],

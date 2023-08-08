@@ -616,20 +616,42 @@
 			//加载语言的内容
 			async function loadLangContent() {
 				const lang = window.localStorage.getItem(LANGUAGE_KEY) || "en" || "zh"
-
 				const langConfig = await import("./langConfig.js").then((res) => res.default)
-
-				console.log(langConfig)
 				const elementIds = Object.keys(langConfig)
+
+				const targetAndContent = []
+
 				elementIds.forEach((elementId) => {
 					const target = document.querySelectorAll(`[lang-id=${elementId}]`)
+					let isConnection = false
+					let isImg = false
 
 					if (!(target instanceof HTMLElement)) {
+						isConnection = true
+					}
+
+					if (isConnection) {
 						for (let i = 0; i < target.length; i++) {
-							target[i].innerHTML = langConfig[elementId][lang]
+							targetAndContent.push({
+								target: target[i],
+								content: langConfig[elementId][lang],
+							})
 						}
 					} else {
-						target[i].innerHTML = langConfig[elementId][lang]
+						targetAndContent.push({
+							target: target[i],
+							content: langConfig[elementId][lang],
+						})
+					}
+				})
+
+				targetAndContent.forEach(({ target, content }) => {
+					const type = target.tagName
+
+					if (type === "IMG") {
+						target.src = content
+					} else {
+						target.innerHTML = content
 					}
 				})
 			}

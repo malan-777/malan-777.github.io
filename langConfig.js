@@ -69,40 +69,114 @@ export default {
 			the digital context.
 			`,
 	},
+	picText_0: {
+		zh: `街景　                         纹理特征　                   形状特征　                  色彩特征`,
+		en: `the streetscape　         texture　                     shape　                      color`,
+	},
 	picText_1: {
-		zh: `安全性”由低到高的街景`,
-		en: `Safety” from low to hig `,
+		zh: `"安全性”由低到高的街景`,
+		en: `Streetscapes graded from low to high on the scale of "sefety"`,
 	},
 	picText_2: {
 		zh: "（图片来源：Nikhil Naik, et al, 2014）",
 		en: "(image courtesy: Nikhil Naik, et al, 2014)"
 	},
+	picText_3: {
+		zh: `"视觉质量”由低到高的街景`,
+		en: `Streetscapes graded from low to high on the scale of "visual quality"`,
+	},
+	picText_4: {
+		zh: "（图片来源：Yu Ye, et al, 2019）",
+		en: "(image courtesy: Yu Ye, et al, 2019)"
+	},
+	picText_5: {
+		zh: `"美观性”由低到高的街景`,
+		en: `Streetscapes graded from low to high on the scale of "beauty"`,
+	},
+	picText_6: {
+		zh: "（图片来源：Abhimanyu Dubey, et al, 2016）",
+		en: "(image courtesy: Abhimanyu Dubey, et al, 2016)"
+	},
+	picText_7: {
+		zh: `"疗愈性”由低到高的街景`,
+		en: `Streetscapes graded from low to high on the scale of "healing perception"`,
+	},
+	picText_8: {
+		zh: "（图片来源：徐磊青, 等, 2020）",
+		en: "(image courtesy: Leiqing Xu, et al, 2020)"
+	},
+	picText_9: {
+		zh: "物质构成相似的街景却有着完全不同的视觉感受",
+		en: "streetscapes share similar object-based configurations but exhibit distinct visual perceptions"
+	},
+	page_change_1: {
+		zh: `上一页`,
+		en: `Last page`
+	},
+	page_change_2: {
+		zh: `下一页`,
+		en: `Next page`
+	},
 	texture: {
-		zh: "纹理",
-		en: "Texture",
+		zh: "纹 理：",
+		en: "Texture:",
+	},
+	texture_tip: {
+		zh: `街景中的表面细节与纹理质感`,
+		en: ` Surface intricacies and textural nuances within streetscapes`
 	},
 	shape: {
-		zh: "形状",
-		en: "Shape",
+		zh: "形 状：",
+		en: "Shape:",
+	},
+	shape_tip: {
+		zh: `街景中的结构组成异质性与不确定性`,
+		en: ` Heterogeneity and uncertainty in the structural composition of streetscapes`
 	},
 	color: {
-		zh: "颜色",
-		en: "Color",
+		zh: "颜 色：",
+		en: "Color:",
+	},
+	color_tip: {
+		zh: `街景中的色彩丰富程度与差异对比度`,
+		en: ` The color richness and the contrasting differences in streetscapes`
 	},
 	default: {
-		zh: "默认",
-		en: "DEFAULT¸",
+		zh: "清 空",
+		en: "Default",
 	},
 	find: {
-		zh: "寻址",
-		en: "Find Geo-location",
+		zh: "寻 址",
+		en: "Find Geo-distribution",
 	},
 	range_btn_low: {
 		zh: "低",
-		en: "lowest",
+		en: "low",
 	},
 	range_btn_hign: {
 		zh: "高",
-		en: "highest",
+		en: "high",
+	},
+	indexing: {
+		zh: `香  港  街  景  索  引`,
+		en: `HongKong Streetscape Indexing`,
+	},
+	indexing_intro: {
+		zh: `以下是一个香港城市街景的概览，涵盖了香港全境的街景类型。
+		<br />通过对街景中“纹理”、“形状”、“颜色”三个视觉感知特征的分析，这些街景类型根据其“视觉感知相似性”被排列为渐变型聚类矩阵，形成一个香港城市街景的“特征地图”。
+		此“特征地图”相对于“地理地图”来说，对城市街景进行了重新排列，是另一空间维度的街景呈现。因此，我们对城市的探索也可以变得灵活、多维。现在，你可以尝试以下操作：
+		<br />1.  拖动左边的量值滑动条，看看“纹理”、“形状”、“颜色”视觉复杂度的变化，会形成怎样的街景？这些街景在“特征地图”中分布如何？点击左侧“寻址”，发现这些街景在“地理地图”中分布又如何？
+		<br />2.  按照你的喜好与想法，在“特征地图”中选择街景，点击“寻址”，发现这些街景在“地理地图”中分布情况。`,
+		en: `Presented below is a global overview of urban streetscapes in Hong Kong, encompassing diverse streetscape types spanning the entire city.
+		<br />Through an analysis of the visual perceptual characteristics like "texture," "shape," and "color", streetscapes are organized into a gradient clustering matrix according to their "visual perceptual similarity". 
+		This arrangement  gives rise to a comprehensive "feature map" capturing the image of Hongkong city.`,
+	},
+	sub_title_1: {
+		zh: `-- 街 景 “特 征 地 图” --`,
+		en: `-- "Feture map" of streetscapes --`,
+	},
+	sub_title_2: {
+		zh: `-- 街 景 “地 理 地 图” --`,
+		en: `-- "Geo-map" of streetscapes --`,
 	},
 }

@@ -37,6 +37,8 @@
 }
 
 .range_label {
+	font-family: "PingFangSC-Medium";
+	color: #444444;
 	margin-bottom: 8px;
 	white-space: pre-wrap;
 	word-wrap: break-word;
@@ -56,9 +58,9 @@
 }
 
 .layui-btn-primary:hover {
-	background-color: #ed6d3f;
-	border-color: #ed6d3f;
-	color: #333;
+	background-color: rgb(207, 111, 9);
+	border-color: rgb(207, 111, 9);
+	color: #fff;
 }
 
 .layui-btn-container {
@@ -68,6 +70,7 @@
 }
 
 .layui-btn {
+	font-family: "PingFangSC-Medium";
 	flex: 1;
 	margin: 0 !important;
 }
@@ -80,11 +83,17 @@
 	margin-left: 5px !important;
 }
 
+.slider-bar {
+	background: rgb(207, 111, 9) !important;
+}
+
 /* 标签容器 */
 .label_container {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	margin-bottom: 10px;
+	line-height: 20px;
+	text-align: left;
 }
 
 .label_container_tips {

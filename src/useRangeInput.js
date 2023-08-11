@@ -37,7 +37,7 @@ export const useRangeInput = (targetArr, { defaultRangeLeft, defaultRangeRight }
 				tips: true,
 				max: multi,
 				step: 1,
-				theme: "#3f85ed",
+				theme: "#cf6f09",
 				range: true, // 范围选择
 				setTips: function (value) {
 					return value / Math.pow(10, 15)

@@ -40,8 +40,8 @@
 	font-family: "PingFangSC-Medium";
 	color: #444444;
 	margin-bottom: 8px;
-	white-space: pre-wrap;
-	word-wrap: break-word;
+	/* white-space:nowrap; */
+	/* word-wrap: break-word; */
 }
 
 .range_btn {

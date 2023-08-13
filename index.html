@@ -206,7 +206,8 @@
       }
 
       .content_embedded > .video_area > video {
-        width: 500px;
+        padding-top: 25px;
+		width: 500px;
       }
 
       .home > .content > .text_area_1 {
@@ -412,8 +413,9 @@
       }
 
       .page_intro {
-		width: 80%;
-		padding-bottom: 15px;
+		width: 95%;
+		padding-top: 5px;
+		padding-bottom: 5px;
         display: flex;
         justify-content:right;
         align-items: center;
@@ -481,11 +483,29 @@
                 <!-- 多张图片并排排列的图片墙 -->
                 <div class="content_gallery">
                   <div class="gallery_item">
-                    <img src="./static/page2-0.png" />
+                    <img src="./static/page2-0a.png" />
                   </div>
                 </div>
 				<div class="pic_text">
-					<p lang-id="picText_0">物质构成相似的街景却有着完全不同的视觉感受</p>
+					<p lang-id="picText_0a"></p>
+				</div>
+
+				<div class="content_gallery">
+					<div class="gallery_item">
+					  <img src="./static/page2-0b.png" />
+					</div>
+				</div>
+				<div class="pic_text">
+					<p lang-id="picText_0b"></p>
+				</div>
+
+				<div class="content_gallery">
+					<div class="gallery_item">
+					  <img src="./static/page2-0c.png" />
+					</div>
+				</div>
+				<div class="pic_text">
+					<p lang-id="picText_0c"></p>
 				</div>
 
                 <p lang-id="contentText_2">正文2</p>
@@ -560,7 +580,7 @@
                     <video src="static/video.mp4" controls></video>
                   </div>
                 </div>
-                <p lang-id="contentText_3">正文3</p>
+                <p lang-id="contentText_4">正文3</p>
               </div>
             </div>
 
@@ -583,10 +603,11 @@
               <div class="range_container">
                 <div class="range_item">
                   <div class="label_container">
-                    <div class="range_label" id="x-label" lang-id="texture">
-                      纹理：
+                    <div class="range_label" id="x-label">
+						<p lang-id="texture">纹理：</p>
+						<p class="label_container_tips" lang-id="texture_tip">tips</p>
                     </div>
-                    <span class="label_container_tips" lang-id="texture_tip">tips</span>
+                    
                   </div>
                   <div class="range_btn_group">
                     <span lang-id="range_btn_low">低</span>
@@ -596,10 +617,13 @@
                 </div>
                 <div class="range_item">
                   <div class="label_container">
-                    <div class="range_label" id="y-label" lang-id="shape">
-                      形状：
+                    <div class="range_label" id="y-label" >
+						<p lang-id="shape">
+							形状：
+						</p>
+						<p class="label_container_tips" lang-id="shape_tip">tips</p>
                     </div>
-                    <span class="label_container_tips" lang-id="shape_tip">tips</span>
+                    
                   </div>
                   <div class="range_btn_group">
                     <span lang-id="range_btn_low">低</span>
@@ -609,10 +633,10 @@
                 </div>
                 <div class="range_item">
                   <div class="label_container">
-                    <div class="range_label" id="z-label" lang-id="color">
-                      色彩：
+                    <div class="range_label" id="z-label">
+						<p  lang-id="color">色彩：</p>
+						<p class="label_container_tips" lang-id="color_tip">tips</p>
                     </div>
-                    <span class="label_container_tips" lang-id="color_tip">tips</span>
                   </div>
                   <div class="range_btn_group">
                     <span lang-id="range_btn_low">低</span>
@@ -649,14 +673,14 @@
 					<p lang-id="page_change_1">Last Page</p>
 					</div>
 				</div>
-				<div class="page_intro" lang-id="indexing_intro">
-					<p>以下是一个香港城市街景的概览，涵盖了香港全境的街景类型。
-						<br />通过对街景中“纹理”、“形状”、“颜色”三个视觉感知特征的分析，这些街景类型根据其“视觉感知相似性”被排列为渐变型聚类矩阵，形成一个香港城市街景的“特征地图”。
-						此“特征地图”相对于“地理地图”来说，对城市街景进行了重新排列，是另一空间维度的街景呈现。因此，我们对城市的探索也可以变得灵活、多维。现在，你可以尝试以下操作：
-						<br />1.  拖动左边的量值滑动条，看看“纹理”、“形状”、“颜色”视觉复杂度的变化，会形成怎样的街景？这些街景在“特征地图”中分布如何？点击“寻址”，发现这些街景在“地理地图”中分布又如何？
-						<br />2.  按照你的喜好与想法，在“特征地图”中选择街景，点击“寻址”，发现这些街景在“地理地图”中分布情况。
-					</p>
+				<div class="page_intro" lang-id="indexing_intro_1">
+					<p>intro_1</p>
 				</div>
+				<hr>
+				<div class="page_intro" lang-id="indexing_intro_2">
+					<p>intro_2</p>
+				</div>
+				<hr>
 				<div class="page3_subtitle" lang-id="sub_title_1">
 					<p>sub-title</p>
 				</div>

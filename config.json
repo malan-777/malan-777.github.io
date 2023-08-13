@@ -20,7 +20,7 @@
 		"设置滑块高亮元素的边框尺寸。"
 	],
 	"clickBorderColor": [
-		"#edb809",
+		"#fc9628",
 		"设置点击元素时产生的边框的颜色。"
 	],
 	"clickBorderWidth": [

@@ -11,7 +11,7 @@ export default {
 
 	contentTitle: {
 		zh: `基于 视觉复杂度 的  香港"城市街景索引"`,
-		en: "HongKong Streetscape Indexing                              Based on Visual Complexity",
+		en: "HongKong Streetscape Indexing <br />Based on Visual Complexity",
 	},
 	contentText_1: {
 		zh: `

@@ -10,8 +10,8 @@ export default {
 	},
 
 	contentTitle: {
-		zh: `基于 视觉复杂度 的  香港"城市街景索引"`,
-		en: "HongKong Streetscape Indexing <br />Based on Visual Complexity",
+		zh: `基于 视觉复杂度 的 城市街景搜索引擎`,
+		en: "Streetscape Search Engine <br />Based on Visual Complexity",
 	},
 	contentText_1: {
 		zh: `
@@ -156,9 +156,17 @@ export default {
 		zh: "清 空",
 		en: "Default",
 	},
-	find: {
+	find_1: {
 		zh: "寻 址",
 		en: "Find Geo-location",
+	},
+	find_2: {
+		zh: "寻 景",
+		en: "Find Streetscapes",
+	},
+	show_hide: {
+		zh: "隐藏/显示",
+		en: "Hide / Show",
 	},
 	range_btn_low: {
 		zh: "低",
@@ -169,27 +177,42 @@ export default {
 		en: "high",
 	},
 	indexing: {
-		zh: `香  港  街  景  索  引`,
-		en: `HongKong Streetscape Indexing`,
+		zh: `街 景 搜 索 引 擎 — 香 港 站`,
+		en: `Streetscape Searching Engine - HongKong`,
 	},
 	indexing_intro_1: {
-		zh: `通过分析街景中纹理、形状、颜色，形成香港城市街景的“特征地图”，将香港全境的街景按“视觉感知相似性”重新排列。
-		相较于“地理地图”，“特征地图”是一种全新的城市形象呈现逻辑。因此，我们对城市的探索将变得更加灵活与有趣！现在，你可以尝试以下操作来探索城市形象：`,
-		en: `Through an analysis of the visual perceptual characteristics like "texture," "shape," and "color", we craft a distinctive "Feature Map" of Hong Kong's urban streetscapes. 
-		This map re-organizes Hong Kong's streetscapes based on their "visual perceptual similarity". 
+		zh: `以下“特征地图”通过分析街景中纹理、形状、颜色，将香港全境街景按“视觉感知相似性”重新排列。
+		相较于“地理地图”，“特征地图”是一种全新的城市形象呈现逻辑。因此，我们对城市形象的探索将变得更加灵活与有趣！现在，你可以尝试以下操作来进行街景信息的搜索：`,
+		en: `The presented "Feature Map" re-organizes the spectrum of Hong Kong's streetscapes based on their "visual perceptual similarity", 
+		achieved through an analysis of textures, shapes, and colors quantified within the street scenes. 
 		In comparison with a "geographic map", this "Feature Map" presents urban streetscapes in a novel alternative logic. 
-		Consequently, our exploration of the city image gains flexibility and fun! Now, feel free to begin your exploration of the city images by engaging with the following actions:`,
+		Consequently, our exploration of the city image gains flexibility and fun! Now, feel free to begin your serch of streescapes by engaging with the following actions:`,
 	},
 	indexing_intro_2: {
-		zh: `1.  拖动左边的量值滑动条，看看“纹理”、“形状”、“颜色”的视觉复杂度变化，会在特征地图中形成怎样的街景？点击“寻址”按键，进一步发现这些街景在“地理地图”中的分布。
+		zh: `1. 寻址：根据街景，迅速定位其在城市中的地理位置。`,
+		en: `1. Find Geo-location: efficiently pinpoint the geo-location within the city according to selected streetscapes.`,
+	},
+	indexing_intro_3: {
+		zh: `· 拖动左边的量值滑动条，看看“纹理”、“形状”、“颜色”的视觉复杂度变化，会在特征地图中形成怎样的街景？点击左侧“寻址”按键，进一步发现这些街景在“地理地图”中的分布。
 		这项操作可应用于：城市色彩研究或艺术家寻找城市中色彩组合丰富的场址，城市驾驶导航中选择视觉体验简洁的道路，等场景。
-		<br />2.  按照你的喜好与想法，在“特征地图”中选择街景，点击“寻址”，发现这些街景在“地理地图”中分布。
+		<br />·  按照你的喜好与想法，在“特征地图”中选择街景，点击“寻址”，发现这些街景在“地理地图”中分布。
 		这项操作可应用于：城市热岛效应研究中定位城市高密度建筑街区，旅游者在城市中搜寻自然风光地带，等场景。`,
-		en: `1.  Slide the bars on the left to witness the effect of the visual complexity level of "texture", "shape", and "color" in formalizing various streetscapes in the "Feature Map".
+		en: `· Slide the bars on the left to witness the effect of the visual complexity level of "texture", "shape", and "color" in formalizing various streetscapes in the "Feature Map".
 		Furthermore, Click on the left-side "Find geo-location" to explore where these streetscapes are positioned on the left "geo-map". 
 		This action can be useful in different situations, like seeking locations with vibrant color combinations for urban color planners or art painters, choosing visually simple routes for city navigation, and more.
-		<br />2.  Based on your preferences and ideas, handpick streetscapes within the "feature map", then click "Find geo-location" to uncover how these chosen streetscapes are distributed on the "geo-map".
+		<br />· Based on your preferences and ideas, handpick streetscapes within the "feature map", then click "Find geo-location" to uncover how these chosen streetscapes are distributed on the "geo-map".
 		This action can be useful in identifying high-density urban areas for urban heat studies, or assisting tourists in discovering natural scenic spots within the city.`,
+	},
+	indexing_intro_4: {
+		zh: `2. 寻景：根据地理位置，掌握其所包含街景的类型与特征。`,
+		en: `2. Find Streetscapes: gain insights into the types and features of the included streetscapes based on selected geo-location.`,
+	},
+	indexing_intro_5: {
+		zh: `· 在“地理地图”中以多段线选择目标区域位置，点击“寻景”，“特征地图”中便以颜色标记的热力图表示区域内街景的组成类型与数量，颜色越深表明此类型街景越多。这项操作可应用于：某区域街景形象的快速审计、区域内街景环境的异质性评估，街道视觉感受的节奏控制，等场景。
+		“隐藏/显示”按键有助于更方便的查看对应街景类型。`,
+		en: `· Within the "Geo-map," delineate your desired area using polylines. Click "Find Streetscapes", the "Feature Map" will unveil a color-coded heat map that showcases the types and quantities of streetscapes in that region. 
+		Darker hues indicate a greater prevalence of a specific type of streetscapes. This functionality finds utility in swiftly auditing street images in specific zones, evaluating the heterogeneity of street environments, controlling the visual rhythm of a street, and more. 
+		The "Hide/Show" button enhances the convenience of viewing the respective streetscape types.`,
 	},
 	sub_title_1: {
 		zh: `-- 街 景 “特 征 地 图” --`,

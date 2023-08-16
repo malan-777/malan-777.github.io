@@ -10,29 +10,6 @@
 	border-right: 2px solid rgba(0, 0, 0, 0.15);
 	overflow: auto;
 	flex-direction: column;
-	transition: all ease-in-out 0.5s;
-	position: relative;
-}
-
-.aside_menu {
-	position: sticky;
-	top: 0;
-	right: 0;
-	z-index: 10;
-	width: 30px;
-	height: 30px;
-	background-color: rgba(0, 0, 0, 0.5);
-	margin-left: auto;
-	transform: translate(20px, -20px);
-}
-
-.open {
-	transform: translate(20px, -20px) rotate(180deg);
-}
-
-.aside_menu>img {
-	width: 100%;
-	height: 100%;
 }
 
 .main {
@@ -63,6 +40,8 @@
 	font-family: "PingFangSC-Medium";
 	color: #444444;
 	margin-bottom: 8px;
+	/* white-space:nowrap; */
+	/* word-wrap: break-word; */
 }
 
 .range_btn {
@@ -85,31 +64,28 @@
 }
 
 .layui-btn-container {
-	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
-	grid-gap: 10px;
-}
-
-.layui-btn :nth-child(n+3) {
-	grid-column: 1;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
 }
 
 .layui-btn {
 	font-family: "PingFangSC-Medium";
+	flex: 1;
 	margin: 0 !important;
-	overflow: hidden;
-	display: flex;
-	justify-content: center;
 }
 
-
-/* .layui-btn-left {
+.layui-btn-left {
 	margin-right: 5px !important;
 }
 
 .layui-btn-right {
 	margin-left: 5px !important;
-} */
+}
+
+.slider-bar {
+	background: rgb(207, 111, 9) !important;
+}
 
 /* 标签容器 */
 .label_container {
@@ -121,6 +97,5 @@
 }
 
 .label_container_tips {
-	font-family: "PingFangSC-Thin";
 	color: rgba(0, 0, 0, 0.5);
 }

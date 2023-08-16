@@ -28,7 +28,7 @@ export default (config) => {
 		scale: 1.5;
 	}
 
-	.img.mask~.img_mask {
+	.img.mask+.img_mask {
 		height: 100%;
 		width: 100%;
 		inset: 0;
@@ -46,20 +46,9 @@ export default (config) => {
 		z-index: 1;
 	}
 
-	.img_degree_mask{
-		opacity: var(--opacity);
-		width:100%;
-		height:100%;
-		background-color:rgb(237,202,2);
-		position:absolute;
-	}
-	
-	.img_degree_mask.hidden{
-		opacity:0;
-	}
-
-	.img_click_mask,.img_mask,.img_degree_mask {
+	.img_click_mask,.img_mask {
 		pointer-events: none;
 	}
+
 	`
 }

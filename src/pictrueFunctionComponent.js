@@ -44,9 +44,14 @@ const pictureFunctionComponent = (container) => {
 				const tempImageContainerDOM = document.createElement("div")
 				const tempImageMask = document.createElement("div")
 				const tempImageClickMask = document.createElement("div")
+				const tempImageDegreeMask = document.createElement("div")
 
 				tempImageMask.classList.add("img_mask")
 				tempImageClickMask.classList.add("img_click_mask")
+				tempImageDegreeMask.classList.add("img_degree_mask")
+
+				tempImageDegreeMask.style = "--opacity:0;"
+				tempImageDegreeMask.setAttribute("id", "img-degree-mask")
 
 				tempImageDOM.src = path
 				tempImageDOM.classList.add("img")
@@ -58,6 +63,7 @@ const pictureFunctionComponent = (container) => {
 				tempImageContainerDOM.appendChild(tempImageDOM)
 				tempImageContainerDOM.appendChild(tempImageMask)
 				tempImageContainerDOM.appendChild(tempImageClickMask)
+				tempImageContainerDOM.appendChild(tempImageDegreeMask)
 				return tempImageContainerDOM
 			})
 	}
@@ -233,6 +239,33 @@ const pictureFunctionComponent = (container) => {
 		}
 	}
 
+	function highlightDegree(arr) {
+		if (!arr) return
+
+		for (let i = 0; i < container.children.length; i++) {
+			const targetContainer = container.childNodes[i]
+			const res = targetContainer.querySelector("#img-degree-mask")
+			if (arr.length === 0 || arr === null) {
+				res.style = `--opacity:0`
+			} else {
+				const target = (parseInt(arr[i]) * 10) / 100
+				res.style = `--opacity:${target > 1 ? 1 : target}`
+			}
+		}
+	}
+
+	function hiddenDegree() {
+		for (let i = 0; i < container.children.length; i++) {
+			const targetContainer = container.childNodes[i]
+			const res = targetContainer.querySelector("#img-degree-mask")
+			if (res.classList.contains("hidden")) {
+				res.classList.remove("hidden")
+			} else {
+				res.classList.add("hidden")
+			}
+		}
+	}
+
 	/**
 	 * 将配置文件注入到css样式中,实现用配置设置样式。
 	 */
@@ -283,6 +316,8 @@ const pictureFunctionComponent = (container) => {
 		render,
 		updateSelectIdList,
 		updateClickIdList,
+		highlightDegree,
+		hiddenDegree,
 	}
 }
 

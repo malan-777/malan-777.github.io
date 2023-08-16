@@ -12,21 +12,7 @@ export function readCoordinate() {
 	return data
 }
 
-export function loadMap(containerId, { markRadius = 1 }) {
-	const markers = []
-	let map = null
-
-	map = new AMap.Map(containerId, {
-		resizeEnable: true,
-		expendZoomRange: true,
-		zoom: 10,
-		zooms: [8, 30],
-		center: [114.15818, 22.281928],
-		showIndoorMap: false,
-		mapStyle: "amap://styles/grey",
-		showLabel: true,
-	})
-
+function loadDistrictSearch(map) {
 	new AMap.DistrictSearch({
 		extensions: "all",
 		subdistrict: 0,
@@ -48,14 +34,31 @@ export function loadMap(containerId, { markRadius = 1 }) {
 		polygon.setPath(pathArray)
 		map.add(polygon)
 	})
+}
+
+export function loadMap(containerId, { markRadius = 1 }) {
+	const markers = []
+	let map = null
+
+	map = new AMap.Map(containerId, {
+		resizeEnable: true,
+		expendZoomRange: true,
+		zoom: 10,
+		zooms: [8, 30],
+		center: [114.15818, 22.281928],
+		showIndoorMap: false,
+		mapStyle: "amap://styles/grey",
+		showLabel: true,
+	})
 
 	const layer = new AMap.LabelsLayer({
 		zooms: [3, 20],
 		zIndex: 1000,
 		collision: false,
 	})
-
 	map.add(layer)
+
+	loadDistrictSearch(map)
 
 	//失焦锁定
 	function lock() {
@@ -97,7 +100,34 @@ export function loadMap(containerId, { markRadius = 1 }) {
 
 	lock()
 
+	const mouseTool = new AMap.MouseTool(map)
+
+	let polygonObject = null
+	function drawPolygon(callback) {
+		if (polygonObject !== null) return
+
+		polygonObject = mouseTool.polygon({
+			strokeColor: "#FF33FF",
+			strokeOpacity: 1,
+			strokeWeight: 6,
+			strokeOpacity: 0.2,
+			fillColor: "#1791fc",
+			fillOpacity: 0.4,
+			// 线样式还支持 'dashed'
+			strokeStyle: "solid",
+			// strokeStyle是dashed时有效
+			// strokeDasharray: [30,10],
+		})
+
+		mouseTool.on("draw", (event) => {
+			const coordinates = [...event.obj.getPath()]
+
+			callback(event.obj, coordinates)
+		})
+	}
+
 	return {
 		clearAndmark,
+		drawPolygon,
 	}
 }

@@ -118,7 +118,6 @@ export function loadMap(containerId, { markRadius = 1 }) {
 			// strokeStyle是dashed时有效
 			// strokeDasharray: [30,10],
 		})
-
 		mouseTool.on("draw", (event) => {
 			const coordinates = [...event.obj.getPath()]
 

@@ -15,12 +15,12 @@
 	<!-- 高德api -->
 	<script type="text/javascript">
 		window._AMapSecurityConfig = {
-			securityJsCode: "b8ebd424c760b6e6decfa854ba80c32a",
+			securityJsCode: "6653c0473726d0f1ab5b2ab0dbe162c4",
 		}
 	</script>
 	<script src="https://cache.amap.com/lbs/static/es5.min.js"></script>
 	<script
-		src="https://webapi.amap.com/maps?v=2.0&key=b2665e76905530969cb6a830bf3e4c45&plugin=AMap.DistrictSearch,AMap.MouseTool"></script>
+		src="https://webapi.amap.com/maps?v=2.0&key=7262dc147356ba13dc72224c66a04e1d&plugin=AMap.DistrictSearch,AMap.MouseTool"></script>
 
 	<title>Urban Streetscapes</title>
 
@@ -508,16 +508,16 @@
 
 							<div class="content_gallery">
 								<div class="gallery_item">
-									<img src="./static/page2-0b.png" />
+								  <img src="./static/page2-0b.png" />
 								</div>
 							</div>
 							<div class="pic_text">
 								<p lang-id="picText_0b"></p>
 							</div>
-
+			
 							<div class="content_gallery">
 								<div class="gallery_item">
-									<img src="./static/page2-0c.png" />
+								  <img src="./static/page2-0c.png" />
 								</div>
 							</div>
 							<div class="pic_text">
@@ -613,7 +613,7 @@
 			<div class="swiper-slide">
 				<div class="app">
 					<div class="aside" id="aside">
-
+						
 						<!-- 侧边栏内容 -->
 						<div class="page3_title" lang-id="indexing">HongKong Streetscape Indexing</div>
 						<div class="range_container">
@@ -686,14 +686,8 @@
 					<div class="main">
 						<!-- 侧边栏尺寸控制菜单 -->
 						<div id="aside_menu" class="aside_menu" onclick="changeAside(event)">
-							<svg t="1692068489288" class="icon" viewBox="0 0 1024 1024" version="1.1"
-								xmlns="http://www.w3.org/2000/svg" p-id="1446" width="200" height="200">
-								<path
-									d="M765.7 486.8L314.9 134.7c-5.3-4.1-12.9-0.4-12.9 6.3v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1c16.4-12.8 16.4-37.6 0-50.4z"
-									p-id="1447"></path>
-							</svg>
+							<img src="./static/icon/right.svg" alt="">
 						</div>
-
 						<div class="page_menu">
 							<div class="page_change_btn pre black" id="pre-page">
 								<img class="menu_icon" src="static/icon/next_black.svg" />
@@ -934,6 +928,7 @@
 
 			// 实现地图标点
 			const polygonArr = []
+
 			function getCoorinatesPath() {
 				return polygonArr.map(item => {
 					const paths = item.data.getPath()
@@ -943,38 +938,37 @@
 				})
 			}
 
-			const countArr = []
-			drawPolygon((polygonObject) => {
-				polygonArr.push({
-					data: polygonObject
-				})
-
-				const coordinatePaths = getCoorinatesPath()
-				for (let i = 0; i < config.count[0]; i++) {
-					const currentCoordinateArr = coordinate[i]
-
-					// 筛选在其中一个多边形中的点
-					const res = currentCoordinateArr.filter(([lat, lng]) => {
-						let isInside = false
-						for (let j = 0; j < coordinatePaths.length; j++) {
-							const inside = AMap.GeometryUtil.isPointInRing(
-								[lng, lat],
-								[...coordinatePaths[j]]
-							)
-
-							if (inside) isInside = true
-						}
-
-						return isInside
-					}).length
-					countArr.push(res)
-				}
-			})
-
 			drawPolygonElement.onclick = function () {
-				if (countArr.length === 0) return
-				highlightDegree(countArr)
-				countArr.splice(0)
+				drawPolygon((polygonObject) => {
+					polygonArr.push({
+						data: polygonObject
+					})
+
+					const coordinatePaths = getCoorinatesPath()
+
+					const countArr = []
+					for (let i = 0; i < config.count[0]; i++) {
+						const currentCoordinateArr = coordinate[i]
+
+						// 筛选在其中一个多边形中的点
+						const res = currentCoordinateArr.filter(([lat, lng]) => {
+							let isInside = false
+							for (let j = 0; j < coordinatePaths.length; j++) {
+								const inside = AMap.GeometryUtil.isPointInRing(
+									[lng, lat],
+									[...coordinatePaths[j]]
+								)
+
+								if (inside) isInside = true
+							}
+
+							return isInside
+						}).length
+						countArr.push(res)
+					}
+
+					highlightDegree(countArr)
+				})
 			}
 
 			hiddenPolygonElement.onclick = () => {
@@ -987,7 +981,6 @@
 				})
 				polygonArr.splice(0)
 				highlightDegree([])
-				countArr.splice(0)
 			}
 
 			// ----------------------------坐标数据-----------------------------------------
@@ -1012,6 +1005,8 @@
 					setXyzDatas(datas);
 				}
 			);
+
+			console.log(coordinate)
 			// ----------------------------侧边栏地图-----------------------------------------
 
 			//手动选择滑块之后的触发更新

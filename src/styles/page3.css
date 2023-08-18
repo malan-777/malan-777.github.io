@@ -16,29 +16,42 @@
 
 .aside_menu {
 	position: sticky;
-	top: 30px;
 	left: 0;
+	top: 0;
 	z-index: 10;
 	width: 30px;
 	height: 30px;
-	background-color: rgba(0, 0, 0, 0.5);
 	margin-right: auto;
-	transform: translate(20px, -20px);
+	transform: translate(-20px, 35px);
+	cursor: pointer;
+	color: #444444;
+	background-color: #d8d8d8;	
+	fill: currentColor;
+	transition: color ease-in-out 0.15s;
 }
+
+.aside_menu:hover {
+	color: #ffffff;
+	background-color: rgb(207, 111, 9);
+}
+
 
 .open {
-	transform: translate(20px, -20px) rotate(180deg);
+	transform: translate(-20px, 35px) rotate(180deg);
 }
 
-.aside_menu>img {
+.aside_menu>svg {
 	width: 100%;
 	height: 100%;
 }
+
+
 
 .main {
 	flex: 3;
 	overflow: auto;
 	padding: 0 20px 0 20px;
+	margin-top: -30px;
 }
 
 

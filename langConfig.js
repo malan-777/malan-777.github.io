@@ -65,12 +65,15 @@ export default {
 	},
 	contentText_4: {
 		zh: `<br />综上，纹理、形状、颜色的视觉复杂度代表了城市视觉感知的信息量，基于此的“城市街景索引”将视觉感知特征、街景及其地理信息融合，创造了一个有趣的城市探索方式。点击“下一页”，让我们一同来探索城市丰富的视觉体验吧！
-		<br />同时，在左侧的视频中，您可以了解有关“城市街景索引”的应用方法。此应用是基于论文XXXXXX而开发的。`,
+		<br />同时，在左侧的视频中，您可以了解有关“城市街景索引”的应用方法。此应用是基于以下论文而开发的：`,
 		en: `<br />To sum up, the visual complexity of texture, shape, and color encapsulates the volume of information in urban visual perception. 
 		Building upon this notion, the "Urban Streetscape Indexing" seamlessly merges visual perceptual characteristics,  treetscapes, and their geographical information, crafting an intriguing approach to the exploration of city images.
 		Click "Next page" to embark on a journey through the city's vibrant visual experiences together!
-		<br />Furthermore, the video on the left provides insights into the application techniques of the "Urban Streetscape Indexing". It's worth noting that this application has been developed based on the research paper XXXXXX.
-			`,
+		<br />Furthermore, the video on the left provides insights into the application techniques of the "Urban Streetscape Indexing". This application is developed based on the research paper:`,
+	},
+	contentText_5: {
+		zh: `<br />Ma, L., Guo, Z., Lu, M., He, S. & Wang, M. (2023). Developing an urban streetscape indexing based on visual complexity and self-organizing map. Building and Environment, 242, 110549.`,
+		en: `<br />Ma, L., Guo, Z., Lu, M., He, S. & Wang, M. (2023). Developing an urban streetscape indexing based on visual complexity and self-organizing map. Building and Environment, 242, 110549.`,
 	},
 	picText_0a: {
 		zh: `*街景的纹理特征`,

@@ -171,6 +171,14 @@ export default {
 		zh: "隐藏/显示",
 		en: "Hide / Show",
 	},
+	location_streetscape: {
+		zh: "地景关系",
+		en: "Ground-Streetscape Dynamic",
+	},
+	fold_unfold: {
+		zh: "- 展开/折叠 -",
+		en: "- Unfold / Fold -",
+	},
 	range_btn_low: {
 		zh: "低",
 		en: "low",

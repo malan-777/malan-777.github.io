@@ -1,5 +1,5 @@
 export default (config) => {
-	return ` 
+    return ` 
 	.pics {
 		position: relative;
 		margin: 0;
@@ -58,8 +58,22 @@ export default (config) => {
 		opacity:0;
 	}
 
-	.img_click_mask,.img_mask,.img_degree_mask {
+	.img_click_mask,.img_mask,.img_degree_mask,.img_color_mask {
 		pointer-events: none;
+	}
+
+	.img_color_mask {
+		opacity: 0.5;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color:var(--color);
+	}
+
+	.img_color_mask.hidden{
+		opacity:0;
 	}
 	`
 }

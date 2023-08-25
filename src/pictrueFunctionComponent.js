@@ -1,324 +1,365 @@
 import resolvePictures from "./resolvePictures.js"
 import picCss from "./styles/picCss.js"
-const pictureFunctionComponent = (container) => {
-	const state = {
-		selectIdList: [],
-		container,
-		clickIdList: [],
-		rowCount: 0,
-		domArr: null,
-		resolvedDomArr: null,
-	}
+const pictureFunctionComponent = (container, colorObj) => {
+    const state = {
+        selectIdList: [],
+        container,
+        clickIdList: [],
+        rowCount: 0,
+        domArr: null,
+        resolvedDomArr: null,
+        isColorMaskEnable: false,
+        isDegreeMaskEnable: false,
+    }
 
-	const mouseRecord = {
-		startId: 0,
-		endId: 0,
-		isMousedown: false,
-		isMove: false,
-		selection: [],
-	}
+    const mouseRecord = {
+        startId: 0,
+        endId: 0,
+        isMousedown: false,
+        isMove: false,
+        selection: [],
+    }
 
-	function getClickIdList() {
-		return Array.from(new Set([...state.clickIdList, ...mouseRecord.selection]))
-	}
+    function getClickIdList() {
+        return Array.from(new Set([...state.clickIdList, ...mouseRecord.selection]))
+    }
 
-	/**
-	 * 根据路径和数目来创建指定数目的图片容器DOM
-	 * @param {*} picPath 图片文件夹所在位置的路径
-	 * @param {*} picCount 所需要渲染的图片的数目
-	 * @returns Array: 生成的DOMs
-	 */
-	function createPictureDOM(picPath, picCount) {
-		const picPaths = resolvePictures(picPath, picCount)
-		return Array.from({ length: picCount })
-			.map((_, index) => {
-				return {
-					path: picPaths[index],
-					index,
-				}
-			})
-			.map((item) => {
-				const { path, index } = item
+    /**
+     * 根据路径和数目来创建指定数目的图片容器DOM
+     * @param {*} picPath 图片文件夹所在位置的路径
+     * @param {*} picCount 所需要渲染的图片的数目
+     * @returns Array: 生成的DOMs
+     */
+    function createPictureDOM(picPath, picCount) {
+        const picPaths = resolvePictures(picPath, picCount)
+        return Array.from({ length: picCount })
+            .map((_, index) => {
+                return {
+                    path: picPaths[index],
+                    index,
+                }
+            })
+            .map((item) => {
+                const { path, index } = item
 
-				const tempImageDOM = document.createElement("img")
-				const tempImageContainerDOM = document.createElement("div")
-				const tempImageMask = document.createElement("div")
-				const tempImageClickMask = document.createElement("div")
-				const tempImageDegreeMask = document.createElement("div")
+                const tempImageDOM = document.createElement("img")
+                const tempImageContainerDOM = document.createElement("div")
+                const tempImageMask = document.createElement("div")
+                const tempImageClickMask = document.createElement("div")
+                const tempImageDegreeMask = document.createElement("div")
+                const tempImgColorMask = document.createElement("div")
 
-				tempImageMask.classList.add("img_mask")
-				tempImageClickMask.classList.add("img_click_mask")
-				tempImageDegreeMask.classList.add("img_degree_mask")
+                tempImageMask.classList.add("img_mask")
+                tempImageClickMask.classList.add("img_click_mask")
+                tempImageDegreeMask.classList.add("img_degree_mask")
 
-				tempImageDegreeMask.style = "--opacity:0;"
-				tempImageDegreeMask.setAttribute("id", "img-degree-mask")
+                tempImageDegreeMask.style = "--opacity:0;"
+                tempImageDegreeMask.setAttribute("id", "img-degree-mask")
 
-				tempImageDOM.src = path
-				tempImageDOM.classList.add("img")
-				tempImageDOM.setAttribute("id", index.toString())
-				tempImageDOM.setAttribute("dragable", false)
+                tempImageDOM.src = path
+                tempImageDOM.classList.add("img")
+                tempImageDOM.setAttribute("id", index.toString())
+                tempImageDOM.setAttribute("dragable", false)
 
-				tempImageContainerDOM.classList.add("img_container")
+                tempImgColorMask.classList.add("img_color_mask")
+                tempImgColorMask.classList.add("hidden")
+                tempImgColorMask.setAttribute("id", "img-color-mask")
+                const [r, g, b] = colorObj[index]
+                tempImgColorMask.style = `--color:rgb(${r},${g},${b});`
 
-				tempImageContainerDOM.appendChild(tempImageDOM)
-				tempImageContainerDOM.appendChild(tempImageMask)
-				tempImageContainerDOM.appendChild(tempImageClickMask)
-				tempImageContainerDOM.appendChild(tempImageDegreeMask)
-				return tempImageContainerDOM
-			})
-	}
+                tempImageContainerDOM.classList.add("img_container")
 
-	/**
-	 * 用于将一些对象绑定到state中
-	 */
-	function bindState(domArr, rowCount) {
-		state.container = container
-		state.domArr = domArr
-		state.rowCount = rowCount
+                tempImageContainerDOM.appendChild(tempImageDOM)
+                tempImageContainerDOM.appendChild(tempImageMask)
+                tempImageContainerDOM.appendChild(tempImageClickMask)
+                tempImageContainerDOM.appendChild(tempImageDegreeMask)
+                tempImageContainerDOM.appendChild(tempImgColorMask)
+                return tempImageContainerDOM
+            })
+    }
 
-		const towDimensionalArr = []
-		for (let i = 0; i < state.domArr.length; i += state.rowCount) {
-			towDimensionalArr.push(state.domArr.slice(i, i + state.rowCount))
-		}
-		state.resolvedDomArr = towDimensionalArr
-	}
+    /**
+     * 用于将一些对象绑定到state中
+     */
+    function bindState(domArr, rowCount) {
+        state.container = container
+        state.domArr = domArr
+        state.rowCount = rowCount
 
-	/**
-	 * 将一个DOM数组，以指定的数量，通过分布渲染渲染到绑定的容器中。
-	 * @param {*} domArray DOMs 数组
-	 * @param {*} count 范围：0 - 数组最大角标
-	 */
-	function renderDOMToContainer(domArray, count) {
-		let currentCount = 0
-		while (currentCount < count) {
-			container.appendChild(domArray[currentCount++])
-		}
-	}
+        const towDimensionalArr = []
+        for (let i = 0; i < state.domArr.length; i += state.rowCount) {
+            towDimensionalArr.push(state.domArr.slice(i, i + state.rowCount))
+        }
+        state.resolvedDomArr = towDimensionalArr
+    }
 
-	function getTargetId(event) {
-		const { container } = state
-		const target = event.target
-		if (target === container || target === null) return
-		const targetId = target.getAttribute("id")
-		return targetId
-	}
+    /**
+     * 将一个DOM数组，以指定的数量，通过分布渲染渲染到绑定的容器中。
+     * @param {*} domArray DOMs 数组
+     * @param {*} count 范围：0 - 数组最大角标
+     */
+    function renderDOMToContainer(domArray, count) {
+        let currentCount = 0
+        while (currentCount < count) {
+            container.appendChild(domArray[currentCount++])
+        }
+    }
 
-	function getImgDOMIDInContainer(container) {
-		return container.firstChild
-	}
+    function getTargetId(event) {
+        const { container } = state
+        const target = event.target
+        if (target === container || target === null) return
+        const targetId = target.getAttribute("id")
+        return targetId
+    }
 
-	function addNewClickIds(newAxisArr) {
-		if (newAxisArr.length === 0 || !(newAxisArr instanceof Array)) return
-		newAxisArr.forEach((item) => {
-			if (!state.clickIdList.includes(item)) {
-				state.clickIdList.push(item)
-			}
-		})
-	}
+    function getImgDOMIDInContainer(container) {
+        return container.firstChild
+    }
 
-	/**
-	 * 为容器绑定点击事件实现内部元素的事件委托，对不需要产生事件的元素可以再次排除或者在css里面排除pointer-events。
-	 */
-	function bindEventContainer() {
-		container.onmousedown = (event) => {
-			event.preventDefault()
+    function addNewClickIds(newAxisArr) {
+        if (newAxisArr.length === 0 || !(newAxisArr instanceof Array)) return
+        newAxisArr.forEach((item) => {
+            if (!state.clickIdList.includes(item)) {
+                state.clickIdList.push(item)
+            }
+        })
+    }
 
-			const { clickIdList } = state
+    /**
+     * 为容器绑定点击事件实现内部元素的事件委托，对不需要产生事件的元素可以再次排除或者在css里面排除pointer-events。
+     */
+    function bindEventContainer() {
+        container.onmousedown = (event) => {
+            event.preventDefault()
 
-			const targetId = getTargetId(event)
+            const { clickIdList } = state
 
-			if (!clickIdList.includes(targetId)) {
-				clickIdList.push(targetId)
-			} else {
-				const tempSelectId = clickIdList.filter((item) => item !== targetId)
-				clickIdList.includes(targetId) && clickIdList.splice(0) && clickIdList.push(...tempSelectId)
-			}
+            const targetId = getTargetId(event)
 
-			addNewClickIds(clickIdList)
+            if (!clickIdList.includes(targetId)) {
+                clickIdList.push(targetId)
+            } else {
+                const tempSelectId = clickIdList.filter((item) => item !== targetId)
+                clickIdList.includes(targetId) && clickIdList.splice(0) && clickIdList.push(...tempSelectId)
+            }
 
-			// 记录选中的id
-			hightlightClickPic()
-			mouseRecord.isMousedown = true
-			mouseRecord.startId = targetId
-			mouseRecord.endId = targetId
-		}
+            addNewClickIds(clickIdList)
 
-		container.onmousemove = (event) => {
-			event.preventDefault()
-			const id = getTargetId(event)
-			mouseRecord.endId = id
+            // 记录选中的id
+            hightlightClickPic()
+            mouseRecord.isMousedown = true
+            mouseRecord.startId = targetId
+            mouseRecord.endId = targetId
+        }
 
-			if (!mouseRecord.isMove && mouseRecord.endId === mouseRecord.startId) return
+        container.onmousemove = (event) => {
+            event.preventDefault()
+            const id = getTargetId(event)
+            mouseRecord.endId = id
 
-			if (mouseRecord.isMousedown) {
-				mouseRecord.isMove = true
-				const startIdRowIndex = Math.floor(mouseRecord.startId / state.rowCount)
-				const endIdRowIndex = Math.floor(mouseRecord.endId / state.rowCount)
-				const startIdColumnIndex = mouseRecord.startId % state.rowCount
-				const endIdColumnIndex = mouseRecord.endId % state.rowCount
+            if (!mouseRecord.isMove && mouseRecord.endId === mouseRecord.startId) return
 
-				//得到所有xy坐标点
-				const axisArr = []
-				for (let i = Math.min(startIdRowIndex, endIdRowIndex); i < Math.max(startIdRowIndex, endIdRowIndex) + 1; i++) {
-					for (let j = Math.min(startIdColumnIndex, endIdColumnIndex); j < Math.max(startIdColumnIndex, endIdColumnIndex) + 1; j++) {
-						axisArr.push([i, j])
-					}
-				}
+            if (mouseRecord.isMousedown) {
+                mouseRecord.isMove = true
+                const startIdRowIndex = Math.floor(mouseRecord.startId / state.rowCount)
+                const endIdRowIndex = Math.floor(mouseRecord.endId / state.rowCount)
+                const startIdColumnIndex = mouseRecord.startId % state.rowCount
+                const endIdColumnIndex = mouseRecord.endId % state.rowCount
 
-				//selectionIds: 所有的id
-				const selectionIds = []
-				axisArr.forEach(([x, y]) => {
-					const target = state.resolvedDomArr[x][y]
-					selectionIds.push(getImgDOMIDInContainer(target).getAttribute("id"))
-				})
+                //得到所有xy坐标点
+                const axisArr = []
+                for (let i = Math.min(startIdRowIndex, endIdRowIndex); i < Math.max(startIdRowIndex, endIdRowIndex) + 1; i++) {
+                    for (let j = Math.min(startIdColumnIndex, endIdColumnIndex); j < Math.max(startIdColumnIndex, endIdColumnIndex) + 1; j++) {
+                        axisArr.push([i, j])
+                    }
+                }
 
-				mouseRecord.selection = selectionIds
-				hightlightClickPic()
-			}
-		}
+                //selectionIds: 所有的id
+                const selectionIds = []
+                axisArr.forEach(([x, y]) => {
+                    const target = state.resolvedDomArr[x][y]
+                    selectionIds.push(getImgDOMIDInContainer(target).getAttribute("id"))
+                })
 
-		container.onmouseup = () => {
-			mouseRecord.isMousedown = false
-			mouseRecord.isMove = false
-			mouseRecord.selection.forEach((item) => {
-				if (!state.clickIdList.includes(item)) {
-					state.clickIdList.push(item)
-				}
-			})
-			mouseRecord.selection.splice(0)
-		}
-	}
+                mouseRecord.selection = selectionIds
+                hightlightClickPic()
+            }
+        }
 
-	function hightlightClickPic() {
-		const { container } = state
-		const clickIds = getClickIdList()
-		if (clickIds.length === 0) {
-			for (let i = 0; i < container.children.length; i++) {
-				const targetContainer = container.childNodes[i]
-				const target = targetContainer.childNodes[0]
+        container.onmouseup = () => {
+            mouseRecord.isMousedown = false
+            mouseRecord.isMove = false
+            mouseRecord.selection.forEach((item) => {
+                if (!state.clickIdList.includes(item)) {
+                    state.clickIdList.push(item)
+                }
+            })
+            mouseRecord.selection.splice(0)
+        }
+    }
 
-				target.classList.contains("mask_click") && target.classList.remove("mask_click")
-			}
-		} else {
-			for (let i = 0; i < container.children.length; i++) {
-				const targetContainer = container.childNodes[i]
-				const target = targetContainer.childNodes[0]
+    function hightlightClickPic() {
+        const { container } = state
+        const clickIds = getClickIdList()
+        if (clickIds.length === 0) {
+            for (let i = 0; i < container.children.length; i++) {
+                const targetContainer = container.childNodes[i]
+                const target = targetContainer.childNodes[0]
 
-				if (clickIds.includes(target.getAttribute("id"))) {
-					target.classList.add("mask_click")
-				} else {
-					target.classList.remove("mask_click")
-				}
-			}
-		}
-	}
+                target.classList.contains("mask_click") && target.classList.remove("mask_click")
+            }
+        } else {
+            for (let i = 0; i < container.children.length; i++) {
+                const targetContainer = container.childNodes[i]
+                const target = targetContainer.childNodes[0]
 
-	/**
-	 * 根据state中的容器和已选中元素的id列表，来对选中的id对应的元素进行高亮处理。
-	 */
-	function highlightPic() {
-		const { selectIdList, container } = state
-		if (selectIdList.length === 0) {
-			for (let i = 0; i < container.children.length; i++) {
-				const targetContainer = container.childNodes[i]
-				const target = targetContainer.childNodes[0]
+                if (clickIds.includes(target.getAttribute("id"))) {
+                    target.classList.add("mask_click")
+                } else {
+                    target.classList.remove("mask_click")
+                }
+            }
+        }
+    }
 
-				target.classList.contains("mask") && target.classList.remove("mask")
-			}
-		} else {
-			for (let i = 0; i < container.children.length; i++) {
-				const targetContainer = container.childNodes[i]
-				const target = targetContainer.childNodes[0]
+    /**
+     * 根据state中的容器和已选中元素的id列表，来对选中的id对应的元素进行高亮处理。
+     */
+    function highlightPic() {
+        const { selectIdList, container } = state
+        if (selectIdList.length === 0) {
+            for (let i = 0; i < container.children.length; i++) {
+                const targetContainer = container.childNodes[i]
+                const target = targetContainer.childNodes[0]
 
-				if (selectIdList.includes(target.getAttribute("id"))) {
-					target.classList.add("mask")
-				} else {
-					target.classList.remove("mask")
-				}
-			}
-		}
-	}
+                target.classList.contains("mask") && target.classList.remove("mask")
+            }
+        } else {
+            for (let i = 0; i < container.children.length; i++) {
+                const targetContainer = container.childNodes[i]
+                const target = targetContainer.childNodes[0]
 
-	function highlightDegree(arr) {
-		if (!arr) return
+                if (selectIdList.includes(target.getAttribute("id"))) {
+                    target.classList.add("mask")
+                } else {
+                    target.classList.remove("mask")
+                }
+            }
+        }
+    }
 
-		for (let i = 0; i < container.children.length; i++) {
-			const targetContainer = container.childNodes[i]
-			const res = targetContainer.querySelector("#img-degree-mask")
-			if (arr.length === 0 || arr === null) {
-				res.style = `--opacity:0`
-			} else {
-				const target = (parseInt(arr[i]) * 10) / 100
-				res.style = `--opacity:${target > 1 ? 1 : target}`
-			}
-		}
-	}
+    function highlightDegree(arr) {
+        if (!arr) return
 
-	function hiddenDegree() {
-		for (let i = 0; i < container.children.length; i++) {
-			const targetContainer = container.childNodes[i]
-			const res = targetContainer.querySelector("#img-degree-mask")
-			if (res.classList.contains("hidden")) {
-				res.classList.remove("hidden")
-			} else {
-				res.classList.add("hidden")
-			}
-		}
-	}
+        for (let i = 0; i < container.children.length; i++) {
+            const targetContainer = container.childNodes[i]
+            const res = targetContainer.querySelector("#img-degree-mask")
+            if (arr.length === 0 || arr === null) {
+                res.style = `--opacity:0`
+            } else {
+                const target = (parseInt(arr[i]) * 10) / 100
+                res.style = `--opacity:${target > 1 ? 1 : target}`
+            }
+        }
+    }
 
-	/**
-	 * 将配置文件注入到css样式中,实现用配置设置样式。
-	 */
-	function injectCustomStyles(config) {
-		const style = document.createElement("style")
+    function showElementChildren(query) {
+        for (let i = 0; i < container.children.length; i++) {
+            const targetContainer = container.childNodes[i]
+            const res = targetContainer.querySelector(query)
+            if (res.classList.contains("hidden")) {
+                res.classList.remove("hidden")
+            }
+        }
+    }
 
-		const css = picCss(config)
+    function hideElementChildren(query) {
+        for (let i = 0; i < container.children.length; i++) {
+            const targetContainer = container.childNodes[i]
+            const res = targetContainer.querySelector(query)
+            if (!res.classList.contains("hidden")) {
+                res.classList.add("hidden")
+            }
+        }
+    }
 
-		style.innerHTML = css
+    function showDegree() {
+        showElementChildren("#img-degree-mask")
+        state.isDegreeMaskEnable = true
+    }
 
-		document.getElementsByTagName("head").item(0).appendChild(style)
-		document.getElementsByTagName("head").item(0).appendChild(style)
-	}
+    function hideDegree() {
+        hideElementChildren("#img-degree-mask")
+        state.isDegreeMaskEnable = false
+    }
 
-	function updateSelectIdList(arr) {
-		state.selectIdList.splice(0)
-		state.selectIdList.push(...arr)
+    function showColorMask() {
+        showElementChildren("#img-color-mask")
+        state.isColorMaskEnable = true
+    }
 
-		highlightPic()
-	}
+    function hideColorMask() {
+        hideElementChildren("#img-color-mask")
+        state.isColorMaskEnable = false
+    }
 
-	function updateClickIdList(arr) {
-		state.clickIdList.splice(0)
-		state.clickIdList.push(...arr)
-		hightlightClickPic()
-	}
+    /**
+     * 将配置文件注入到css样式中,实现用配置设置样式。
+     */
+    function injectCustomStyles(config) {
+        const style = document.createElement("style")
 
-	/**
-	 * 进行统一渲染的函数
-	 * @param {*} path 渲染文件夹的路径
-	 * @param {*} count 渲染的数目
-	 */
-	function render(path, count, rowCount, config) {
-		return new Promise((resolve) => {
-			const doms = createPictureDOM(path, count)
+        const css = picCss(config)
 
-			bindState(doms, rowCount)
-			renderDOMToContainer(doms, count)
-			bindEventContainer()
-			injectCustomStyles(config)
+        style.innerHTML = css
 
-			resolve(true)
-		})
-	}
+        document.getElementsByTagName("head").item(0).appendChild(style)
+        document.getElementsByTagName("head").item(0).appendChild(style)
+    }
 
-	return {
-		state,
-		render,
-		updateSelectIdList,
-		updateClickIdList,
-		highlightDegree,
-		hiddenDegree,
-	}
+    function updateSelectIdList(arr) {
+        state.selectIdList.splice(0)
+        state.selectIdList.push(...arr)
+
+        highlightPic()
+    }
+
+    function updateClickIdList(arr) {
+        state.clickIdList.splice(0)
+        state.clickIdList.push(...arr)
+        hightlightClickPic()
+    }
+
+    /**
+     * 进行统一渲染的函数
+     * @param {*} path 渲染文件夹的路径
+     * @param {*} count 渲染的数目
+     */
+    function render(path, count, rowCount, config) {
+        return new Promise((resolve) => {
+            const doms = createPictureDOM(path, count)
+
+            bindState(doms, rowCount)
+            renderDOMToContainer(doms, count)
+            bindEventContainer()
+            injectCustomStyles(config)
+
+            resolve(true)
+        })
+    }
+
+    return {
+        state,
+        render,
+        updateSelectIdList,
+        updateClickIdList,
+        highlightDegree,
+        showDegree,
+        hideDegree,
+        hideColorMask,
+        showColorMask,
+    }
 }
 
 export default pictureFunctionComponent

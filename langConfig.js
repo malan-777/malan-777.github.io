@@ -15,29 +15,32 @@ export default {
 	},
 	contentText_1: {
 		zh: `
-			实体已不再是城市存在的唯一方式，人们通过在线街景应用（谷歌街景、百度街景等）便可以足不出户地探索世界各地的城市形象与风貌。
-			随着智慧城市的信息建设与数字化发展进入快车道，人们对城市形象探索有了更高的需求，例如，快速搜索特定街景、智能交互城市环境，明智决策规划发展。 
-			然而，现有的在线街景应用却无法摆脱线性单一的探索模式，人们只能被限制在虚拟的街道上单向点击前进，无法对城市形象进行多样化的交互探索体验。 
-			因此，我们开发了一个“城市街景索引”应用，通过收集、分析和描述整个城市街景的视觉信息数据流，以达到灵活、多维度、高效地深入挖掘城市视觉环境特征的目的，从而改变现代城市形象的管理与探索的方式。
-			<br /><br />在此“城市街景索引”中，我们着眼于街景的纹理、形状、色彩这三个基于感知的视觉特征，并以视觉复杂度的方式去度量其视觉信息量。这样做的原因有三：
+			在数字化与虚拟化的浪潮下，实体已不再是城市存在的唯一方式，城市的定义正在经历着深刻的变革。
+			如今，虚拟世界与现实世界越来越融合，人们可以通过互联网和数字技术在无需身临其境的情况下探索城市。
+			其中，在线街景应用（谷歌街景、百度街景等）便是探索世界各地城市形象与风貌的有效手段。
+			然而，随着智慧城市信息建设进入快车道，人们对城市形象探索有了更高的需求，例如，快速搜索特定街景、智能交互城市环境，明智决策规划发展。 
+			但现有的在线街景应用却无法摆脱线性单一的探索模式，人们只能被限制在虚拟的街道上单向点击前进，无法对城市形象进行多样化的交互探索体验。 
+			因此，我们开发了一个“城市街景搜索引擎”应用，通过收集、分析和描述整个城市街景的视觉信息数据流，以达到灵活、多维度、高效地深入挖掘城市视觉环境特征的目的，从而改变现代城市形象的管理与探索的方式。
+			<br /><br />在此“城市街景搜索引擎”中，我们着眼于街景的纹理、形状、色彩这三个基于感知的视觉特征，并以视觉复杂度的方式去度量其视觉信息量。这样做的原因有三：
 			<br /><br />1. 凯文林奇在《城市意象》中提出，沿街的砖墙老屋、门前的热闹集市、街边的葱郁大树等，这些具有不同纹理、形状、色彩与组合模式的视觉肌理，往往会形成生动、强烈的心理图像，
 			是强化城市意象性(imageability)与易辨性(legibility)的感知方式。因此，纹理、形状、色彩是认识城市意象、印象、风貌形象的典型视觉特征。
 			`,
 		en: `
-			Physical presence is no longer the exclusive mode of experiencing cities. Through online street view applications like Google Street View or Baidu Street View, 
-			one can seamlessly explore city images worldwide without stepping out of your home.
-			<br/><br/>With the advancement of information infrastructure and digital progress in smart cities, the desire for urban image exploration has surged. 
+			Amidst the trend of digitization and virtulization, physical presence is no longer the exclusive notion of a city, and the very definition of a city is currently undergoing a profound evolution. 
+			Nowadays, the virtual world is becoming increasingly intertwined with the physical reality, allowing individuals to explore cities through the internet and digital technologies without the constraints of physical presence.
+			For instance, online street view applications like Google Street View or Baidu Street View serve as effective tools for exploring city images worldwide.
+			<br/><br/>
+			However, with the advancement of information infrastructure in smart cities, the desire for the exploration of city images has surged. 
 			This includes the rapid retrieval of specific streetscapes, intelligent interaction with urban environments, and informed decision-making for urban planning and development.
-
-			However, these online street views still remain constrained by a "monotonous" exploration mode, where users are limited to one-way clicks, navigating virtual streets without the opportunity for
+			But these online street view applications still remain constrained by a "monotonous" exploration mode, where users are limited to one-way clicks, navigating virtual streets without the opportunity for
 			diverse and interactive urban experiences.
 			<br/><br/>
 
-			Hence, we have introduced an "Urban Streetscape Indexing" application, which systematically collects, analyzes, and characterize the visual information stream of the city streetscapes. 
+			Hence, we have introduced an "Urban Streetscape Search Engine" application, which systematically collects, analyzes, and characterize the visual information stream of the city streetscapes. 
 			Aiming to achieve a dynamic, multi-dimensional, and efficient exploration of urban streetscapes, ultimately revolutionizing the methods of managing and exploring modern urban images.
 			<br/><br/>
 
-			In this "Urban Streetscape Indexing", we specifically focus on three perception-based visual characteristics: texture, shape, and color of the streetscape, which are quantified using visual complexity as the measurement. There are
+			In this "Urban Streetscape Search Engine", we specifically focus on three perception-based visual characteristics: texture, shape, and color of the streetscape, which are quantified using visual complexity as the measurement. There are
 			three compelling reasons behind this approach:
 			<br/><br/>
 
@@ -64,12 +67,12 @@ export default {
 			`,
 	},
 	contentText_4: {
-		zh: `<br />综上，纹理、形状、颜色的视觉复杂度代表了城市视觉感知的信息量，基于此的“城市街景索引”将视觉感知特征、街景及其地理信息融合，创造了一个有趣的城市探索方式。点击“下一页”，让我们一同来探索城市丰富的视觉体验吧！
-		<br />同时，在左侧的视频中，您可以了解有关“城市街景索引”的应用方法。此应用是基于以下论文而开发的：`,
+		zh: `<br />综上，纹理、形状、颜色的视觉复杂度代表了城市视觉感知的信息量，基于此的“城市街景搜索引擎”将视觉感知特征、街景及其地理信息融合，创造了一个有趣的城市探索方式。点击“下一页”，让我们一同来探索城市丰富的视觉体验吧！
+		<br />同时，在左侧的视频中，您可以了解有关“城市街景搜索引擎”的应用方法。此应用是基于以下论文而开发的：`,
 		en: `<br />To sum up, the visual complexity of texture, shape, and color encapsulates the volume of information in urban visual perception. 
-		Building upon this notion, the "Urban Streetscape Indexing" seamlessly merges visual perceptual characteristics,  treetscapes, and their geographical information, crafting an intriguing approach to the exploration of city images.
+		Building upon this notion, the "Urban Streetscape Search Engine" seamlessly merges visual perceptual characteristics,  treetscapes, and their geographical information, crafting an intriguing approach to the exploration of city images.
 		Click "Next page" to embark on a journey through the city's vibrant visual experiences together!
-		<br />Furthermore, the video on the left provides insights into the application techniques of the "Urban Streetscape Indexing". This application is developed based on the research paper:`,
+		<br />Furthermore, the video on the left provides insights into the application techniques of the "Urban Streetscape Search Engine". This application is developed based on the research paper:`,
 	},
 	contentText_5: {
 		zh: `<br />Ma, L., Guo, Z., Lu, M., He, S. & Wang, M. (2023). Developing an urban streetscape indexing based on visual complexity and self-organizing map. Building and Environment, 242, 110549.`,
@@ -136,7 +139,7 @@ export default {
 		en: "Texture Complexity:",
 	},
 	texture_tip: {
-		zh: `街景中的表面细节与纹理质感`,
+		zh: `街景的表面细节与纹理质感`,
 		en: `Streetscapes' surface intricacies and textural nuances.`
 	},
 	shape: {
@@ -215,7 +218,7 @@ export default {
 		This action can be useful in identifying high-density urban areas for urban heat studies, or assisting tourists in discovering natural scenic spots within the city.`,
 	},
 	indexing_intro_4: {
-		zh: `2. 寻景：根据地理位置，掌握其所包含街景的类型与特征。`,
+		zh: `2. 寻景：根据地理位置，了解其所包含街景的类型与特征。`,
 		en: `2. Find Streetscapes: gain insights into the types and features of the included streetscapes based on selected geo-location.`,
 	},
 	indexing_intro_5: {
@@ -223,6 +226,16 @@ export default {
 		“隐藏/显示”按键有助于更方便的查看对应街景类型。`,
 		en: `· Within the "Geo-map," delineate your desired area using polylines. Click "Find Streetscapes", the "Feature Map" will unveil a color-coded heat map that showcases the types and quantities of streetscapes in that region. 
 		Darker hues indicate a greater prevalence of a specific type of streetscapes. This functionality finds utility in swiftly auditing street images in specific zones, evaluating the heterogeneity of street environments, controlling the visual rhythm of a street, and more. 
+		The "Hide/Show" button enhances the convenience of viewing the respective streetscape types.`,
+	},
+	indexing_intro_6: {
+		zh: `3. 地景关系：以色彩标记连接城市“特征地图”与“地理地图”，展现城市街景分布特征。`,
+		en: `3. Ground-streetscape dynamic: utilizing color spectrum markers, "Feature Map" and "Geo-map" are seamlessly linked, presenting distinct distribution patterns of the city.`,
+	},
+	indexing_intro_7: {
+		zh: `3. 点击“地景关系”，“特征地图”被色谱标记，细粒度区分不同街景类型；同时，“地理地图”中相应以色彩点展示了城市街景分布。“隐藏/显示”按键有助于更方便的查看对应街景类型。`,
+		en: `3. Clicking on "Ground-streetscape dynamic" triggers the color mask of "Feature Map", allowing for a fine-grained distinction of various streetscape types; 
+		Simultaneously, the distribution of streetscapes is vividly illustrated on "Geo-map" through using corresponding color-marked dots.  
 		The "Hide/Show" button enhances the convenience of viewing the respective streetscape types.`,
 	},
 	sub_title_1: {

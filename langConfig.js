@@ -81,7 +81,7 @@ export default {
 	contentText_6: {
 		zh: `<br />此研究受支持于国家社会科学基金(No.21BMZ111)、国家自然科学基金(No.52308015, No.52208014)、广东省基础与应用基础研究基金(No. 2021A1515110546)、广州市科技计划项目(No. 202102020683)。另外，感谢广东工业大学本科生邓朝阳同学前期的调研、GIS数据分析、与数据整理工作。`,
 		en: `<br />This work was supported by the National Social Science Fund of China (No.21BMZ111), the National Natural Science Foundation of China (No.52308015, No.52208014), the Guangdong Basic and Applied Basic Research Foundation (No.2021A1515110546) , and the Guangzhou Science and Technology Planning Project (No.202102020683).
-		Additionally, we extend our appreciation to Deng Zhaoyang, an undergraduate student at Guangdong University of Technology, for his valuable contributions in the preliminary research, GIS data analysis, and data organization work.`,
+		Additionally, we extend our appreciation to Chaoyang Deng, an undergraduate student at Guangdong University of Technology, for his valuable contributions in the preliminary research, GIS data analysis, and data organization work.`,
 	},
 	picText_0a: {
 		zh: `*街景的纹理特征`,
